@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <!-- SEO -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Reproductor PWA, rápido y responsive.">
+  <title>Radios del Perú - Reproductor PWA</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/png" href="./icons/icon-192.png">
+  <link rel="shortcut icon" type="image/png" href="./icons/icon-192.png">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+
+  <!-- Fuentes (rendimiento) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="./styles.css">
+  
+  <!-- JavaScript Principal -->
+  <script defer src="./app.js"></script>
+  
+  <!-- Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('Service Worker registrado:', reg))
+          .catch(err => console.error('Error al registrar Service Worker:', err));
+      });
+    }
+  </script>
+</head>
+<body>
+  <!-- Sección principal con lista de radios -->
+  <section class="sec sec-2" id="sec-2">
+
+    <header class="header">
+      <h4>Radios en vivo</h4>
+      <div class="header-search">
+        <input id="searchInput" type="search" placeholder="Buscar..." aria-label="Buscar estación">
+        <i class="material-icons">search</i>
+      </div>
+      <div class="header-buttons">
+        <button type="button" id="refreshBtn" onclick="refreshStations()" title="Recargar emisoras" aria-label="Recargar emisoras">
+          <i class="material-icons">refresh</i>
+        </button>
+        <button type="button" class="dark-mode-btn" onclick="darkMood()" title="Cambiar tema oscuro/claro" aria-label="Cambiar tema oscuro/claro">
+          <i class="material-icons">invert_colors</i>
+        </button>
+      </div>
+    </header>
+
+    <div class="music-list" id="music-list"></div>
+
+    <!-- Audio player -->
+    <audio id="audio" preload="none"></audio>
+
+    <!-- Reproductor -->
+    <div class="players" id="players">
+      <button type="button" class="back-btn" onclick="showplayer()" aria-label="Minimizar reproductor">
+        <i class="material-icons">expand_more</i>
+      </button>
+      <button type="button" class="equaliser-top" onclick="equalizerBtn(event)" aria-label="Rotador de imagen" title="Rotar imagen">
+        <i class="material-icons">refresh</i>
+      </button>
+
+      <div class="bottom">
+        <div class="thumbnail">
+          <img id="thumbnail" src="https://i.ibb.co/D4BdW1v/microfono.png" width="60" height="60" alt="Portada" loading="lazy">
+        </div>
+
+        <div class="content" onclick="showplayer()">
+          <h3 id="name">Selecciona una radio</h3>
+          <small id="category">Categoría</small>
+          <div id="currentTime" class="player-time" style="font-size:1.1em;color:#007bff;margin-top:6px;display:none;"></div>
+        </div>
+
+        <div class="btn-group">
+          <button type="button" class="prevBtn" onclick="prevPlay()" aria-label="Anterior">
+            <i class="material-icons">skip_previous</i>
+          </button>
+          <button type="button" class="playBtn" onclick="playPause(event)" aria-label="Reproducir/Pausar">
+            <i id="playBtn" class="material-icons">play_arrow</i>
+          </button>
+          <button type="button" class="nextBtn" onclick="nextPlay()" aria-label="Siguiente">
+            <i class="material-icons">skip_next</i>
+          </button>
+        </div>
+
+        <div class="volume-box" aria-label="Control de volumen">
+          <span onclick="volumeDown()" title="Bajar volumen" role="button" tabindex="0" aria-label="Bajar volumen">
+            <i class="material-icons">volume_down</i>
+          </span>
+          <div class="volume-control">
+            <input type="range" class="volume-bar" id="volumeBar" step="1" value="60" min="0" max="100"
+                   oninput="updateVolume(this.value)" aria-label="Volumen">
+            <span class="volume-percentage" id="volumePercentage">60%</span>
+          </div>
+          <span onclick="volumeUp()" title="Subir volumen" role="button" tabindex="0" aria-label="Subir volumen">
+            <i class="material-icons">volume_up</i>
+          </span>
+        </div>
+      </div>
+
+      <!-- Menú de navegación debajo del reproductor -->
+      <div class="player-menu">
+        <button type="button" id="homeBtn" class="menu-btn active" onclick="showHome()" title="Inicio" aria-label="Inicio">
+          <i class="material-icons">home</i>
+          <span>Inicio</span>
+        </button>
+        <button type="button" id="localesBtn" class="menu-btn" onclick="showLocales()" title="Locales" aria-label="Locales">
+          <i class="material-icons">place</i>
+          <span>Locales</span>
+        </button>
+        <button type="button" id="worldBtn" class="menu-btn" onclick="showWorld()" title="World" aria-label="World">
+          <i class="material-icons">language</i>
+          <span>World</span>
+        </button>
+        <button type="button" id="favoritesBtn" class="menu-btn" onclick="showFavorites()" title="Favoritos" aria-label="Favoritos">
+          <i class="material-icons">favorite</i>
+          <span>Favoritos</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
