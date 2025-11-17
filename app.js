@@ -803,12 +803,3 @@ function setEqualizer(action = false){
 // 16. EJECUTAR AL CARGAR LA PÁGINA
 // ========================================
 FirstSetUp();
-
-// ========================================
-// 17. REGISTRO DEL SERVICE WORKER
-// ========================================
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch(console.error);
-  });
-}
