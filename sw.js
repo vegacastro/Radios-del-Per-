@@ -1,4 +1,4 @@
-const VERSION = 'v1.0.2';
+const VERSION = 'v1.0.3';
 const STATIC_CACHE = `static-${VERSION}`;
 const ASSETS = [
   './',
@@ -8,8 +8,6 @@ const ASSETS = [
   './manifest.webmanifest',
   './icons/icon-192.png',
   './icons/icon-512.png',
-  './icons/maskable-192.png',
-  './icons/maskable-512.png',
   'https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap',
   'https://fonts.googleapis.com/icon?family=Material+Icons'
 ];
