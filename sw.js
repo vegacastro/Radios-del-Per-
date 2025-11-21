@@ -1,11 +1,11 @@
-const VERSION = 'v1.0.3';
+const VERSION = 'v1.0.4';
 const STATIC_CACHE = `static-${VERSION}`;
 const ASSETS = [
   './',
   './index.html',
   './styles.css',
   './app.js',
-  './manifest.webmanifest',
+  './manifest.json',
   './icons/icon-192.png',
   './icons/icon-512.png',
   'https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap',
