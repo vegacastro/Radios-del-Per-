@@ -18,13 +18,15 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Radios Perú">
 
-  <!-- Fuentes (rendimiento) -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Fuentes (rendimiento optimizado) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"></noscript>
 
-  <!-- Material Icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Material Icons (carga diferida) -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></noscript>
 
   <!-- CSS -->
   <link rel="stylesheet" href="./styles.css">
@@ -48,15 +50,12 @@
   <section class="sec sec-2" id="sec-2">
 
     <header class="header">
-      <h4>Radios en vivo</h4>
+      <h4>Radios</h4>
       <div class="header-search">
         <input id="searchInput" type="search" placeholder="Buscar..." aria-label="Buscar estación">
         <i class="material-icons">search</i>
       </div>
       <div class="header-buttons">
-        <button type="button" id="installBtn" onclick="installPWA()" title="Instalar aplicación" aria-label="Instalar aplicación" style="display:none;">
-          <i class="material-icons">get_app</i>
-        </button>
         <button type="button" id="refreshBtn" onclick="refreshStations()" title="Recargar emisoras" aria-label="Recargar emisoras">
           <i class="material-icons">refresh</i>
         </button>

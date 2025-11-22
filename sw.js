@@ -1,5 +1,6 @@
-const VERSION = 'v1.0.6';
+const VERSION = 'v1.0.7';
 const STATIC_CACHE = `static-${VERSION}`;
+const FONT_CACHE = 'fonts-v1';
 const ASSETS = [
   './',
   './index.html',
@@ -7,9 +8,7 @@ const ASSETS = [
   './app.js',
   './manifest.json',
   './icons/icon-192.png',
-  './icons/icon-512.png',
-  'https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap',
-  'https://fonts.googleapis.com/icon?family=Material+Icons'
+  './icons/icon-512.png'
 ];
 
 self.addEventListener('install', (e) => {
@@ -32,10 +31,30 @@ self.addEventListener('activate', (e) => {
   );
 });
 
-// HTML: network-first; estáticos: stale-while-revalidate
+// Manejo de fetch con cache estratégico
 self.addEventListener('fetch', (e) => {
   const req = e.request;
+  const url = new URL(req.url);
 
+  // Cachear fuentes de Google Fonts
+  if (url.origin === 'https://fonts.googleapis.com' || url.origin === 'https://fonts.gstatic.com') {
+    e.respondWith(
+      caches.open(FONT_CACHE).then((cache) =>
+        cache.match(req).then((cached) => {
+          const fetchPromise = fetch(req).then((response) => {
+            if (response.ok) {
+              cache.put(req, response.clone());
+            }
+            return response;
+          }).catch(() => cached);
+          return cached || fetchPromise;
+        })
+      )
+    );
+    return;
+  }
+
+  // HTML: network-first
   if (req.mode === 'navigate') {
     e.respondWith(
       fetch(req)
@@ -49,6 +68,7 @@ self.addEventListener('fetch', (e) => {
     return;
   }
 
+  // Archivos estáticos: cache-first con revalidación
   const isStatic =
     req.destination === 'style' ||
     req.destination === 'script' ||
@@ -60,7 +80,6 @@ self.addEventListener('fetch', (e) => {
       caches.match(req).then((cached) => {
         const fromNet = fetch(req)
           .then((res) => {
-            // Solo cachear respuestas exitosas
             if (res.ok) {
               const copy = res.clone();
               caches.open(STATIC_CACHE).then((c) => c.put(req, copy));
@@ -68,11 +87,9 @@ self.addEventListener('fetch', (e) => {
             return res;
           })
           .catch((err) => {
-            // Si hay caché, usarlo; si no, retornar un error manejado
             if (cached) {
               return cached;
             }
-            // Para imágenes, retornar una respuesta vacía en lugar de error
             if (req.destination === 'image') {
               return new Response('', {
                 status: 404,
