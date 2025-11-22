@@ -17,6 +17,13 @@ const body = document.querySelector("body");
 const searchInput = document.getElementById('searchInput');
 const volumeBar = document.getElementById('volumeBar');
 
+// Variables para metadatos
+let currentMetadata = {
+  title: '',
+  artist: '',
+  station: ''
+};
+
 // ========================================
 // 2. DATOS DE EMISORAS (Internacionalización preparada)
 // ========================================
@@ -500,6 +507,7 @@ function setActive(id) {
 }
 
 function setData(data) {
+   currentMetadata.station = data.nombre || '';
    nameEl.textContent = data.nombre || '';
    let info = '';
    if (data.ciudad) {
@@ -511,6 +519,9 @@ function setData(data) {
    category.innerHTML = info;
    thumbnail.src = data.imagen || '';
    thumbnail.alt = `Portada ${data.nombre || ''}`;
+   
+   // Actualizar MediaSession
+   updateMediaSession(data);
 }
 
 async function playMusic(id) {
@@ -707,7 +718,87 @@ audio.addEventListener('playing', () => {
 });
 
 // ========================================
-// 14. RELOJ EN TIEMPO REAL
+// 14. RECUPERACIÓN DE METADATOS
+// ========================================
+
+// Actualizar MediaSession API para notificaciones y controles del sistema
+function updateMediaSession(data) {
+  if (!('mediaSession' in navigator)) return;
+  
+  const title = currentMetadata.title || data.nombre || 'Radio en vivo';
+  const artist = currentMetadata.artist || (data.ciudad ? `${data.ciudad}, ${data.region || 'Perú'}` : 'Perú');
+  
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: title,
+    artist: artist,
+    album: 'Radios del Perú',
+    artwork: [
+      { src: data.imagen || 'https://i.ibb.co/D4BdW1v/microfono.png', sizes: '96x96', type: 'image/png' },
+      { src: data.imagen || 'https://i.ibb.co/D4BdW1v/microfono.png', sizes: '128x128', type: 'image/png' },
+      { src: data.imagen || 'https://i.ibb.co/D4BdW1v/microfono.png', sizes: '192x192', type: 'image/png' },
+      { src: data.imagen || 'https://i.ibb.co/D4BdW1v/microfono.png', sizes: '256x256', type: 'image/png' },
+      { src: data.imagen || 'https://i.ibb.co/D4BdW1v/microfono.png', sizes: '384x384', type: 'image/png' },
+      { src: data.imagen || 'https://i.ibb.co/D4BdW1v/microfono.png', sizes: '512x512', type: 'image/png' }
+    ]
+  });
+
+  // Configurar controles de MediaSession
+  navigator.mediaSession.setActionHandler('play', () => {
+    audio.play();
+    playBtn.textContent = 'pause';
+  });
+  
+  navigator.mediaSession.setActionHandler('pause', () => {
+    audio.pause();
+    playBtn.textContent = 'play_arrow';
+  });
+  
+  navigator.mediaSession.setActionHandler('previoustrack', () => {
+    prevPlay();
+  });
+  
+  navigator.mediaSession.setActionHandler('nexttrack', () => {
+    nextPlay();
+  });
+  
+  navigator.mediaSession.setActionHandler('stop', () => {
+    audio.pause();
+    audio.currentTime = 0;
+    playBtn.textContent = 'play_arrow';
+  });
+}
+
+// Intentar obtener metadatos del stream (ICY metadata)
+function fetchStreamMetadata(url) {
+  // Esta función intenta obtener metadatos ICY del stream
+  // Nota: Muchos servidores de streaming no permiten CORS para metadatos
+  fetch(url, {
+    method: 'GET',
+    headers: {
+      'Icy-MetaData': '1'
+    }
+  }).then(response => {
+    const icyMetaInt = response.headers.get('icy-metaint');
+    if (icyMetaInt) {
+      console.log('Stream soporta metadatos ICY');
+    }
+  }).catch(err => {
+    // Silenciosamente fallar si no se pueden obtener metadatos
+    console.debug('No se pudieron obtener metadatos ICY:', err.message);
+  });
+}
+
+// Escuchar cambios en los metadatos del audio (si están disponibles)
+audio.addEventListener('loadedmetadata', () => {
+  const data = musicData.find(m => m.id === currentId);
+  if (data) {
+    updateMediaSession(data);
+    fetchStreamMetadata(data.src);
+  }
+});
+
+// ========================================
+// 15. RELOJ EN TIEMPO REAL
 // ========================================
 function updateCurrentTime() {
   const el = document.getElementById('currentTime');
@@ -743,7 +834,7 @@ if (playerWindow) {
 }
 
 // ========================================
-// 15. INICIALIZACIÓN DE LA APLICACIÓN
+// 16. INICIALIZACIÓN DE LA APLICACIÓN
 // ========================================
 function FirstSetUp() {
   let lastStation = null;
@@ -800,6 +891,41 @@ function setEqualizer(action = false){
 }
 
 // ========================================
-// 16. EJECUTAR AL CARGAR LA PÁGINA
+// 17. PWA - PROMPT DE INSTALACIÓN
+// ========================================
+let deferredPrompt;
+const installBtn = document.getElementById('installBtn');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  if (installBtn) installBtn.style.display = 'block';
+  console.log('beforeinstallprompt event fired');
+});
+
+window.addEventListener('appinstalled', () => {
+  if (installBtn) installBtn.style.display = 'none';
+  deferredPrompt = null;
+  console.log('PWA instalada exitosamente');
+});
+
+window.installPWA = function() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('Usuario aceptó instalar la PWA');
+      } else {
+        console.log('Usuario rechazó instalar la PWA');
+      }
+      deferredPrompt = null;
+    });
+  } else {
+    alert('Para instalar:\n\n1. Toca el menú (⋮) del navegador\n2. Selecciona "Instalar aplicación" o "Agregar a pantalla de inicio"');
+  }
+};
+
+// ========================================
+// 18. EJECUTAR AL CARGAR LA PÁGINA
 // ========================================
 FirstSetUp();
