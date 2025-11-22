@@ -744,13 +744,17 @@ audio.addEventListener('playing', () => {
 function updateMediaSession(data) {
   if (!('mediaSession' in navigator)) return;
   
-  const title = currentMetadata.title || data.nombre || 'Radio en vivo';
-  const artist = currentMetadata.artist || (data.ciudad ? `${data.ciudad}, ${data.region || 'Perú'}` : 'Perú');
+  // Mostrar nombre de la radio como título
+  const title = data.nombre || 'Radio en vivo';
+  // Mostrar ciudad y región como artista (en lugar del nombre de la app)
+  const artist = data.ciudad && data.region 
+    ? `${data.ciudad}, ${data.region}` 
+    : (data.ciudad || data.region || 'Perú');
   
   navigator.mediaSession.metadata = new MediaMetadata({
     title: title,
     artist: artist,
-    album: 'Radios del Perú',
+    album: '', // Dejar vacío para no mostrar "Radios del Perú"
     artwork: [
       { src: data.imagen || 'https://i.ibb.co/D4BdW1v/microfono.png', sizes: '96x96', type: 'image/png' },
       { src: data.imagen || 'https://i.ibb.co/D4BdW1v/microfono.png', sizes: '128x128', type: 'image/png' },
