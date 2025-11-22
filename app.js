@@ -800,6 +800,47 @@ function setEqualizer(action = false){
 }
 
 // ========================================
-// 16. EJECUTAR AL CARGAR LA PÁGINA
+// 16. PWA - PROMPT DE INSTALACIÓN
+// ========================================
+let deferredPrompt;
+const installBtn = document.getElementById('installBtn');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Prevenir que Chrome 67 y anteriores muestren el prompt automáticamente
+  e.preventDefault();
+  // Guardar el evento para usarlo después
+  deferredPrompt = e;
+  // Mostrar botón de instalación
+  if (installBtn) installBtn.style.display = 'block';
+  console.log('beforeinstallprompt event fired');
+});
+
+window.addEventListener('appinstalled', () => {
+  // Ocultar botón después de instalar
+  if (installBtn) installBtn.style.display = 'none';
+  deferredPrompt = null;
+  console.log('PWA instalada exitosamente');
+});
+
+// Función para instalar la PWA
+window.installPWA = function() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('Usuario aceptó instalar la PWA');
+      } else {
+        console.log('Usuario rechazó instalar la PWA');
+      }
+      deferredPrompt = null;
+    });
+  } else {
+    // Para navegadores que no soportan beforeinstallprompt o ya instalado
+    alert('Para instalar:\n\n1. Toca el menú (⋮) del navegador\n2. Selecciona "Instalar aplicación" o "Agregar a pantalla de inicio"');
+  }
+};
+
+// ========================================
+// 17. EJECUTAR AL CARGAR LA PÁGINA
 // ========================================
 FirstSetUp();
