@@ -908,10 +908,15 @@ let deferredPrompt;
 const installBtn = document.getElementById('installBtn');
 
 window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
+  // Guardar el evento para uso posterior con el botón manual
   deferredPrompt = e;
+  
+  // Mostrar botón de instalación personalizado
   if (installBtn) installBtn.style.display = 'block';
-  console.log('beforeinstallprompt event fired');
+  
+  // NO prevenir el comportamiento por defecto
+  // Esto permite que cada navegador muestre su propio prompt automático
+  console.log('PWA lista para instalar - banner automático habilitado');
 });
 
 window.addEventListener('appinstalled', () => {
@@ -920,19 +925,26 @@ window.addEventListener('appinstalled', () => {
   console.log('PWA instalada exitosamente');
 });
 
+// Función para instalar manualmente desde el botón
 window.installPWA = function() {
   if (deferredPrompt) {
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then((choiceResult) => {
       if (choiceResult.outcome === 'accepted') {
         console.log('Usuario aceptó instalar la PWA');
+        if (installBtn) installBtn.style.display = 'none';
       } else {
         console.log('Usuario rechazó instalar la PWA');
       }
       deferredPrompt = null;
     });
   } else {
-    alert('Para instalar:\n\n1. Toca el menú (⋮) del navegador\n2. Selecciona "Instalar aplicación" o "Agregar a pantalla de inicio"');
+    // Instrucciones para navegadores que no soportan el prompt programático
+    alert('Para instalar esta aplicación:\n\n' +
+          '📱 Chrome/Edge móvil: Menú (⋮) → "Instalar aplicación"\n' +
+          '🍎 Safari iOS: Compartir → "Agregar a pantalla de inicio"\n' +
+          '🦁 Brave: Menú (⋮) → "Instalar aplicación"\n' +
+          '💻 Navegadores de escritorio: Busca el ícono de instalación (+) en la barra de direcciones');
   }
 };
 
