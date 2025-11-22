@@ -1,13 +1,13 @@
-const VERSION = 'v1.0.5';
+const VERSION = 'v1.0.6';
 const STATIC_CACHE = `static-${VERSION}`;
 const ASSETS = [
-  '/',
-  '/index.html',
-  '/styles.css',
-  '/app.js',
-  '/manifest.json',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png',
+  './',
+  './index.html',
+  './styles.css',
+  './app.js',
+  './manifest.json',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
   'https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap',
   'https://fonts.googleapis.com/icon?family=Material+Icons'
 ];
@@ -41,10 +41,10 @@ self.addEventListener('fetch', (e) => {
       fetch(req)
         .then((res) => {
           const copy = res.clone();
-          caches.open(STATIC_CACHE).then((c) => c.put('/index.html', copy));
+          caches.open(STATIC_CACHE).then((c) => c.put('./index.html', copy));
           return res;
         })
-        .catch(() => caches.match('/index.html'))
+        .catch(() => caches.match('./index.html'))
     );
     return;
   }
