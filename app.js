@@ -542,21 +542,40 @@ async function playMusic(id) {
    }
    
    try {
-     if (audio.src !== data.src) {
-       audio.src = data.src;
-       await audio.load();
+     // Siempre asignar la URL incluso si es la misma para refrescar
+     audio.src = data.src;
+     audio.load();
+     
+     // Intentar reproducir con timeout
+     const playPromise = audio.play();
+     if (playPromise !== undefined) {
+       await playPromise;
+       setEqualizer();
      }
-     await audio.play();
-     setEqualizer();
    } catch (err) {
      console.error('Error reproduciendo stream:', err);
+     playBtn.textContent = "play_arrow";
+     
+     // Mostrar mensaje al usuario
+     if (err.name === 'NotAllowedError') {
+       console.log('Interacción del usuario requerida para reproducir audio');
+     } else if (err.name === 'NotSupportedError') {
+       alert('Este formato de audio no está soportado por tu navegador');
+     } else {
+       console.log('No se pudo conectar con la emisora. Verifica tu conexión.');
+     }
    }
 }
 
 function playPause(e) {
    if (audio.paused) {
      playBtn.textContent = "pause";
-     audio.play().then(()=> setEqualizer()).catch(()=>{});
+     audio.play()
+       .then(() => setEqualizer())
+       .catch((err) => {
+         console.error('Error al reproducir:', err);
+         playBtn.textContent = "play_arrow";
+       });
    } else {
      playBtn.textContent = "play_arrow";
      audio.pause();
@@ -770,22 +789,10 @@ function updateMediaSession(data) {
 
 // Intentar obtener metadatos del stream (ICY metadata)
 function fetchStreamMetadata(url) {
-  // Esta función intenta obtener metadatos ICY del stream
-  // Nota: Muchos servidores de streaming no permiten CORS para metadatos
-  fetch(url, {
-    method: 'GET',
-    headers: {
-      'Icy-MetaData': '1'
-    }
-  }).then(response => {
-    const icyMetaInt = response.headers.get('icy-metaint');
-    if (icyMetaInt) {
-      console.log('Stream soporta metadatos ICY');
-    }
-  }).catch(err => {
-    // Silenciosamente fallar si no se pueden obtener metadatos
-    console.debug('No se pudieron obtener metadatos ICY:', err.message);
-  });
+  // Nota: La mayoría de servidores de streaming no permiten CORS para metadatos
+  // Esta función está deshabilitada para evitar errores CORS
+  // Los metadatos se manejan a través de MediaSession API solamente
+  console.debug('Metadatos ICY no disponibles por restricciones CORS');
 }
 
 // Escuchar cambios en los metadatos del audio (si están disponibles)
