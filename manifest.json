@@ -1,7 +1,7 @@
 {
   "id": "./",
-  "name": "Radios del Perú - PWA",
-  "short_name": "Radios Perú",
+  "name": "Radios del Perú",
+  "short_name": "App Radios",
   "description": "Todas tus radios favoritas en un solo lugar.",
   "lang": "es",
   "start_url": "./",
