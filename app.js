@@ -24,10 +24,6 @@ let currentMetadata = {
   station: ''
 };
 
-// URL del backend API (cambiar después de desplegar)
-const METADATA_API_URL = 'http://localhost:3000'; // Local
-// const METADATA_API_URL = 'https://tu-proyecto.vercel.app'; // Producción
-
 // ========================================
 // 2. DATOS DE EMISORAS (Internacionalización preparada)
 // ========================================
@@ -748,11 +744,12 @@ audio.addEventListener('playing', () => {
 function updateMediaSession(data) {
   if (!('mediaSession' in navigator)) return;
   
-  // Si hay metadatos de canción, usarlos; si no, usar info de la radio
-  const title = currentMetadata.title || data.nombre || 'Radio en vivo';
-  const artist = currentMetadata.artist || (data.ciudad && data.region 
+  // Mostrar nombre de la radio como título
+  const title = data.nombre || 'Radio en vivo';
+  // Mostrar ciudad y región como artista (en lugar del nombre de la app)
+  const artist = data.ciudad && data.region 
     ? `${data.ciudad}, ${data.region}` 
-    : (data.ciudad || data.region || 'Perú'));
+    : (data.ciudad || data.region || 'Perú');
   
   navigator.mediaSession.metadata = new MediaMetadata({
     title: title,
@@ -794,84 +791,87 @@ function updateMediaSession(data) {
   });
 }
 
-// Intentar obtener metadatos del stream (ICY metadata)
-// Intentar obtener metadatos del stream a través del backend proxy
-async function fetchStreamMetadata(url) {
-  if (!url) return;
-  
+// Función para obtener metadatos del stream usando el proxy de Vercel
+async function fetchStreamMetadataViaProxy(streamUrl) {
   try {
-    const response = await fetch(`${METADATA_API_URL}/metadata?url=${encodeURIComponent(url)}`);
-    const data = await response.json();
+    // Construir URL del proxy (funciona en producción y localhost)
+    const proxyUrl = `/api/metadata?url=${encodeURIComponent(streamUrl)}`;
     
-    if (data.supported && data.metadata) {
-      // Actualizar metadatos actuales
-      currentMetadata.title = data.metadata.title || '';
-      currentMetadata.artist = data.metadata.artist || '';
+    console.log('[Metadata] Solicitando metadata via proxy:', proxyUrl);
+    
+    const response = await fetch(proxyUrl, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    
+    const metadata = await response.json();
+    console.log('[Metadata] Recibida:', metadata);
+    
+    // Si la petición fue exitosa y hay metadata disponible
+    if (metadata.success && metadata.station) {
+      const station = metadata.station;
       
-      // Actualizar UI si hay información de canción
-      if (data.metadata.title) {
-        updateNowPlaying(data.metadata);
+      // Actualizar UI con metadata del stream si está disponible
+      const nowPlayingEl = document.getElementById('nowPlaying');
+      const songInfoEl = document.getElementById('songInfo');
+      
+      if (nowPlayingEl && songInfoEl) {
+        // Mostrar información de la estación
+        let displayText = '';
+        
+        if (station.name && station.name !== 'Desconocido') {
+          displayText = station.name;
+        }
+        
+        if (station.genre) {
+          displayText += (displayText ? ' • ' : '') + station.genre;
+        }
+        
+        if (station.bitrate) {
+          displayText += (displayText ? ' • ' : '') + station.bitrate + ' kbps';
+        }
+        
+        if (displayText) {
+          songInfoEl.textContent = displayText;
+          nowPlayingEl.style.display = 'block';
+        } else {
+          nowPlayingEl.style.display = 'none';
+        }
       }
       
-      // Actualizar MediaSession con la info de la canción
-      const stationData = musicData.find(m => m.id === currentId);
-      if (stationData) {
-        updateMediaSession(stationData);
-      }
-      
-      console.log('Metadatos obtenidos:', data.metadata);
+      return metadata;
     } else {
-      console.log('Stream no soporta metadatos ICY');
+      console.log('[Metadata] No hay metadata disponible para este stream');
+      return null;
     }
-  } catch (err) {
-    console.debug('No se pudieron obtener metadatos:', err.message);
-  }
-}
-
-// Actualizar elemento "Ahora suena" en la UI
-function updateNowPlaying(metadata) {
-  const nowPlayingEl = document.getElementById('nowPlaying');
-  const songInfoEl = document.getElementById('songInfo');
-  
-  if (!nowPlayingEl || !songInfoEl) return;
-  
-  if (metadata.artist && metadata.title) {
-    songInfoEl.textContent = `${metadata.artist} - ${metadata.title}`;
-    nowPlayingEl.style.display = 'block';
-  } else if (metadata.title) {
-    songInfoEl.textContent = metadata.title;
-    nowPlayingEl.style.display = 'block';
-  } else {
-    nowPlayingEl.style.display = 'none';
-  }
-}
-
-// Polling de metadatos cada 10 segundos
-let metadataInterval = null;
-
-function startMetadataPolling() {
-  stopMetadataPolling();
-  
-  const data = musicData.find(m => m.id === currentId);
-  if (!data || !data.src) return;
-  
-  // Obtener metadatos inmediatamente
-  fetchStreamMetadata(data.src);
-  
-  // Luego cada 10 segundos
-  metadataInterval = setInterval(() => {
-    if (!audio.paused) {
-      fetchStreamMetadata(data.src);
+    
+  } catch (error) {
+    console.error('[Metadata] Error al obtener metadata:', error.message);
+    // Ocultar el indicador si hay error
+    const nowPlayingEl = document.getElementById('nowPlaying');
+    if (nowPlayingEl) {
+      nowPlayingEl.style.display = 'none';
     }
-  }, 10000);
-}
-
-function stopMetadataPolling() {
-  if (metadataInterval) {
-    clearInterval(metadataInterval);
-    metadataInterval = null;
+    return null;
   }
 }
+
+// Escuchar cuando el audio empieza a reproducirse para obtener metadata
+audio.addEventListener('playing', async () => {
+  const currentStation = musicData.find(m => m.id === currentId);
+  if (currentStation && currentStation.src) {
+    // Pequeño delay para asegurar que el stream está conectado
+    setTimeout(async () => {
+      await fetchStreamMetadataViaProxy(currentStation.src);
+    }, 1500);
+  }
+});
 
 // Escuchar cambios en los metadatos del audio (si están disponibles)
 audio.addEventListener('loadedmetadata', () => {
@@ -879,16 +879,6 @@ audio.addEventListener('loadedmetadata', () => {
   if (data) {
     updateMediaSession(data);
   }
-});
-
-// Iniciar polling de metadatos cuando empieza la reproducción
-audio.addEventListener('play', () => {
-  startMetadataPolling();
-});
-
-// Detener polling cuando se pausa
-audio.addEventListener('pause', () => {
-  stopMetadataPolling();
 });
 
 // ========================================
