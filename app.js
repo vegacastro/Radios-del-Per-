@@ -17,6 +17,9 @@ const body = document.querySelector("body");
 const searchInput = document.getElementById('searchInput');
 const volumeBar = document.getElementById('volumeBar');
 
+// Variables para HLS
+let hls = null;
+
 // Variables para metadatos
 let currentMetadata = {
   title: '',
@@ -542,21 +545,89 @@ async function playMusic(id) {
    }
    
    try {
-     // Siempre asignar la URL incluso si es la misma para refrescar
-     audio.src = data.src;
-     audio.load();
+     // Detectar si es stream HLS (.m3u8)
+     const isHLS = data.src.includes('.m3u8');
      
-     // Intentar reproducir con timeout
-     const playPromise = audio.play();
-     if (playPromise !== undefined) {
-       await playPromise;
-       setEqualizer();
+     if (isHLS && typeof Hls !== 'undefined') {
+       // Usar HLS.js para streams .m3u8
+       if (Hls.isSupported()) {
+         // Limpiar instancia anterior de HLS si existe
+         if (hls) {
+           hls.destroy();
+         }
+         
+         hls = new Hls({
+           enableWorker: true,
+           lowLatencyMode: true,
+           backBufferLength: 90
+         });
+         
+         hls.loadSource(data.src);
+         hls.attachMedia(audio);
+         
+         hls.on(Hls.Events.MANIFEST_PARSED, function() {
+           audio.play()
+             .then(() => setEqualizer())
+             .catch((err) => {
+               console.error('Error reproduciendo stream HLS:', err);
+               playBtn.textContent = "play_arrow";
+             });
+         });
+         
+         hls.on(Hls.Events.ERROR, function(event, data) {
+           console.error('Error HLS:', data);
+           if (data.fatal) {
+             switch(data.type) {
+               case Hls.ErrorTypes.NETWORK_ERROR:
+                 console.log('Error de red, intentando recuperar...');
+                 hls.startLoad();
+                 break;
+               case Hls.ErrorTypes.MEDIA_ERROR:
+                 console.log('Error de medios, intentando recuperar...');
+                 hls.recoverMediaError();
+                 break;
+               default:
+                 console.error('Error fatal, destruyendo HLS');
+                 hls.destroy();
+                 playBtn.textContent = "play_arrow";
+                 break;
+             }
+           }
+         });
+       } else if (audio.canPlayType('application/vnd.apple.mpegurl')) {
+         // Safari nativo soporta HLS
+         audio.src = data.src;
+         audio.load();
+         const playPromise = audio.play();
+         if (playPromise !== undefined) {
+           await playPromise;
+           setEqualizer();
+         }
+       } else {
+         alert('Tu navegador no soporta la reproducción de este stream HLS');
+         playBtn.textContent = "play_arrow";
+       }
+     } else {
+       // Stream normal (MP3, AAC, etc.)
+       // Limpiar HLS si estaba activo
+       if (hls) {
+         hls.destroy();
+         hls = null;
+       }
+       
+       audio.src = data.src;
+       audio.load();
+       
+       const playPromise = audio.play();
+       if (playPromise !== undefined) {
+         await playPromise;
+         setEqualizer();
+       }
      }
    } catch (err) {
      console.error('Error reproduciendo stream:', err);
      playBtn.textContent = "play_arrow";
      
-     // Mostrar mensaje al usuario
      if (err.name === 'NotAllowedError') {
        console.log('Interacción del usuario requerida para reproducir audio');
      } else if (err.name === 'NotSupportedError') {
