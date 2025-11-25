@@ -520,8 +520,12 @@ function setData(data) {
      info += (info ? ' • ' : '') + '<span class="player-region">' + data.region + '</span>';
    }
    category.innerHTML = info;
+   category.style.color = ''; // Restaurar color normal
    thumbnail.src = data.imagen || '';
    thumbnail.alt = `Portada ${data.nombre || ''}`;
+   
+   // Actualizar información expandida
+   updateExpandedInfo(data);
    
    // Actualizar MediaSession
    updateMediaSession(data);
@@ -533,7 +537,7 @@ async function playMusic(id) {
    currentId = data.id;
    setActive(currentId);
    setData(data);
-   playBtn.textContent = "pause";
+   syncPlayButtons(true);
    
    try {
      localStorage.setItem('lastPlayedStation', JSON.stringify({
@@ -567,10 +571,13 @@ async function playMusic(id) {
          
          hls.on(Hls.Events.MANIFEST_PARSED, function() {
            audio.play()
-             .then(() => setEqualizer())
+             .then(() => {
+               syncPlayButtons(true);
+               setEqualizer();
+             })
              .catch((err) => {
                console.error('Error reproduciendo stream HLS:', err);
-               playBtn.textContent = "play_arrow";
+               syncPlayButtons(false);
              });
          });
          
@@ -580,7 +587,13 @@ async function playMusic(id) {
              switch(data.type) {
                case Hls.ErrorTypes.NETWORK_ERROR:
                  console.log('Error de red, intentando recuperar...');
+                 showErrorMessage('Emisora no Disponible');
                  hls.startLoad();
+                 setTimeout(() => {
+                   if (audio.paused) {
+                     syncPlayButtons(false);
+                   }
+                 }, 5000);
                  break;
                case Hls.ErrorTypes.MEDIA_ERROR:
                  console.log('Error de medios, intentando recuperar...');
@@ -588,8 +601,9 @@ async function playMusic(id) {
                  break;
                default:
                  console.error('Error fatal, destruyendo HLS');
+                 showErrorMessage('Emisora no Disponible');
                  hls.destroy();
-                 playBtn.textContent = "play_arrow";
+                 syncPlayButtons(false);
                  break;
              }
            }
@@ -601,11 +615,12 @@ async function playMusic(id) {
          const playPromise = audio.play();
          if (playPromise !== undefined) {
            await playPromise;
+           syncPlayButtons(true);
            setEqualizer();
          }
        } else {
          alert('Tu navegador no soporta la reproducción de este stream HLS');
-         playBtn.textContent = "play_arrow";
+         syncPlayButtons(false);
        }
      } else {
        // Stream normal (MP3, AAC, etc.)
@@ -621,19 +636,21 @@ async function playMusic(id) {
        const playPromise = audio.play();
        if (playPromise !== undefined) {
          await playPromise;
+         syncPlayButtons(true);
          setEqualizer();
        }
      }
    } catch (err) {
      console.error('Error reproduciendo stream:', err);
-     playBtn.textContent = "play_arrow";
+     syncPlayButtons(false);
      
      if (err.name === 'NotAllowedError') {
        console.log('Interacción del usuario requerida para reproducir audio');
+       showErrorMessage('Haz clic para reproducir');
      } else if (err.name === 'NotSupportedError') {
-       alert('Este formato de audio no está soportado por tu navegador');
+       showErrorMessage('Formato no soportado');
      } else {
-       console.log('No se pudo conectar con la emisora. Verifica tu conexión.');
+       showErrorMessage('Emisora no Disponible');
      }
    }
 }
@@ -1096,3 +1113,152 @@ window.installPWA = function() {
 // 18. EJECUTAR AL CARGAR LA PÁGINA
 // ========================================
 FirstSetUp();
+
+// ========================================
+// 19. FUNCIONES PARA REPRODUCTOR EXPANDIDO MODERNO
+// ========================================
+
+// Actualizar reloj del reproductor
+function updatePlayerClock() {
+  const clockEl = document.getElementById('playerTime');
+  if (!clockEl) return;
+  
+  const now = new Date();
+  let h = now.getHours();
+  const m = now.getMinutes().toString().padStart(2, '0');
+  const ampm = h >= 12 ? 'p. m.' : 'a. m.';
+  h = h % 12;
+  h = h ? h : 12;
+  
+  clockEl.textContent = `${h}:${m} ${ampm}`;
+}
+
+// Actualizar cada minuto
+setInterval(updatePlayerClock, 60000);
+updatePlayerClock();
+
+// Sincronizar controles de volumen
+const volumeBarExpanded = document.getElementById('volumeBarExpanded');
+if (volumeBarExpanded && volumeBar) {
+  // Sincronizar valor inicial
+  volumeBarExpanded.value = volumeBar.value;
+  
+  // Sincronizar al cambiar volumen normal
+  volumeBar.addEventListener('input', () => {
+    volumeBarExpanded.value = volumeBar.value;
+    const percentEl = document.getElementById('volumePercentageExpanded');
+    if (percentEl) {
+      percentEl.textContent = volumeBar.value + '%';
+    }
+  });
+  
+  // Sincronizar al cambiar volumen expandido
+  volumeBarExpanded.addEventListener('input', () => {
+    volumeBar.value = volumeBarExpanded.value;
+    updateVolume(volumeBarExpanded.value);
+  });
+}
+
+// Función para actualizar fondo con blur dinámico
+function updatePlayerBackground(imageUrl) {
+  const bgBlur = document.getElementById('playerBgBlur');
+  if (bgBlur && imageUrl) {
+    bgBlur.style.backgroundImage = `url(${imageUrl})`;
+  }
+}
+
+// Función para sincronizar iconos de play/pause
+function syncPlayButtons(isPlaying) {
+  const playBtnIcon = document.getElementById('playBtn');
+  const playBtnExpandedIcon = document.getElementById('playBtnExpanded');
+  const playCircle = document.querySelector('.play-btn-circle');
+  
+  if (isPlaying) {
+    if (playBtnIcon) playBtnIcon.textContent = 'pause';
+    if (playBtnExpandedIcon) playBtnExpandedIcon.textContent = 'pause';
+    if (playCircle) playCircle.classList.remove('paused');
+  } else {
+    if (playBtnIcon) playBtnIcon.textContent = 'play_arrow';
+    if (playBtnExpandedIcon) playBtnExpandedIcon.textContent = 'play_arrow';
+    if (playCircle) playCircle.classList.add('paused');
+  }
+}
+
+// Modificar función playPause para sincronizar
+const originalPlayPause = window.playPause;
+window.playPause = function(e) {
+  if (typeof originalPlayPause === 'function') {
+    originalPlayPause(e);
+  } else {
+    if (audio.paused) {
+      audio.play()
+        .then(() => {
+          syncPlayButtons(true);
+          setEqualizer();
+        })
+        .catch((err) => {
+          console.error('Error al reproducir:', err);
+          syncPlayButtons(false);
+        });
+    } else {
+      audio.pause();
+      syncPlayButtons(false);
+      setEqualizer(true);
+    }
+  }
+};
+
+// Actualizar información expandida cuando cambia la radio
+function updateExpandedInfo(data) {
+  const nameExpanded = document.getElementById('nameExpanded');
+  const categoryExpanded = document.getElementById('categoryExpanded');
+  
+  if (nameExpanded) {
+    nameExpanded.textContent = data.nombre || 'Sin nombre';
+  }
+  
+  if (categoryExpanded) {
+    let info = '';
+    if (data.ciudad) info += data.ciudad;
+    if (data.region && data.region !== data.ciudad) {
+      info += (info ? ' • ' : '') + data.region;
+    }
+    categoryExpanded.textContent = info || 'Sin información';
+  }
+  
+  // Actualizar fondo blur
+  updatePlayerBackground(data.imagen);
+}
+
+// Función para mostrar mensaje de error
+function showErrorMessage(message) {
+  nameEl.textContent = message;
+  category.textContent = 'Intenta con otra emisora';
+  category.style.color = 'rgba(255, 255, 255, 0.7)';
+}
+
+// Función para restaurar información normal
+function restoreNormalInfo() {
+  category.style.color = '';
+}
+
+// Escuchar eventos de reproducción
+audio.addEventListener('play', () => {
+  syncPlayButtons(true);
+  restoreNormalInfo();
+});
+audio.addEventListener('pause', () => syncPlayButtons(false));
+audio.addEventListener('ended', () => syncPlayButtons(false));
+
+// Escuchar errores de audio
+audio.addEventListener('error', (e) => {
+  console.error('Error de audio:', e);
+  syncPlayButtons(false);
+  showErrorMessage('Emisora no Disponible');
+  
+  // Si hay HLS activo, también destruirlo
+  if (hls) {
+    hls.destroy();
+    hls = null;
+  }
+});

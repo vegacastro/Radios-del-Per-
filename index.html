@@ -75,28 +75,62 @@
 
     <!-- Reproductor -->
     <div class="players" id="players">
+      <!-- Fondo con blur dinámico -->
+      <div class="player-bg-blur" id="playerBgBlur"></div>
+      
       <button type="button" class="back-btn" onclick="showplayer()" aria-label="Minimizar reproductor">
         <i class="material-icons">expand_more</i>
       </button>
-      <button type="button" class="equaliser-top" onclick="equalizerBtn(event)" aria-label="Rotador de imagen" title="Rotar imagen">
-        <i class="material-icons">refresh</i>
-      </button>
+
+      <!-- Hora grande (solo visible cuando está expandido) -->
+      <div class="player-clock" id="playerClock" style="display:none;">
+        <span id="playerTime">12:00 p. m.</span>
+      </div>
 
       <div class="bottom">
-        <div class="thumbnail">
-          <img id="thumbnail" src="https://i.ibb.co/D4BdW1v/microfono.png" width="60" height="60" alt="Portada" loading="lazy">
+        <div class="thumbnail-wrapper">
+          <div class="thumbnail">
+            <img id="thumbnail" src="https://i.ibb.co/D4BdW1v/microfono.png" width="60" height="60" alt="Portada" loading="lazy">
+          </div>
         </div>
 
         <div class="content" onclick="showplayer()">
           <h3 id="name">Selecciona una radio</h3>
           <small id="category">Categoría</small>
-          <div id="nowPlaying" class="now-playing" style="font-size:0.9em;color:#28a745;margin-top:4px;display:none;font-style:italic;">
-            <i class="material-icons" style="font-size:14px;vertical-align:middle;">music_note</i>
-            <span id="songInfo"></span>
-          </div>
-          <div id="currentTime" class="player-time" style="font-size:1.1em;color:#007bff;margin-top:6px;display:none;"></div>
         </div>
 
+        <!-- Metadata de canción (solo visible cuando está expandido) -->
+        <div class="player-metadata" id="playerMetadata" style="display:none;">
+          <div id="nowPlaying" class="now-playing-expanded">
+            <i class="material-icons">music_note</i>
+            <span id="songInfo">Esperando información...</span>
+          </div>
+        </div>
+
+        <!-- Información de la radio (solo visible cuando está expandido) -->
+        <div class="player-info-expanded" id="playerInfoExpanded" style="display:none;">
+          <h2 id="nameExpanded">Nombre de la Radio</h2>
+          <p id="categoryExpanded">Ciudad • Región</p>
+        </div>
+
+        <!-- Barra de controles con animaciones -->
+        <div class="player-controls-expanded" id="playerControlsExpanded" style="display:none;">
+          <button type="button" class="control-icon-btn" onclick="prevPlay()" aria-label="Anterior">
+            <i class="material-icons">skip_previous</i>
+          </button>
+          
+          <button type="button" class="play-btn-circle" onclick="playPause(event)" aria-label="Reproducir/Pausar">
+            <div class="pulse-ring"></div>
+            <div class="pulse-ring-2"></div>
+            <i id="playBtnExpanded" class="material-icons">play_arrow</i>
+          </button>
+          
+          <button type="button" class="control-icon-btn" onclick="nextPlay()" aria-label="Siguiente">
+            <i class="material-icons">skip_next</i>
+          </button>
+        </div>
+
+        <!-- Botones minificados (solo visible cuando está minimizado) -->
         <div class="btn-group">
           <button type="button" class="prevBtn" onclick="prevPlay()" aria-label="Anterior">
             <i class="material-icons">skip_previous</i>
@@ -109,19 +143,22 @@
           </button>
         </div>
 
-        <div class="volume-box" aria-label="Control de volumen">
-          <span onclick="volumeDown()" title="Bajar volumen" role="button" tabindex="0" aria-label="Bajar volumen">
+        <!-- Control de volumen (solo visible cuando está expandido) -->
+        <div class="volume-box-expanded" id="volumeBoxExpanded" style="display:none;">
+          <button onclick="volumeDown()" class="volume-icon-btn" aria-label="Bajar volumen">
             <i class="material-icons">volume_down</i>
-          </span>
-          <div class="volume-control">
-            <input type="range" class="volume-bar" id="volumeBar" step="1" value="60" min="0" max="100"
+          </button>
+          <div class="volume-control-expanded">
+            <input type="range" class="volume-bar-expanded" id="volumeBarExpanded" step="1" value="60" min="0" max="100"
                    oninput="updateVolume(this.value)" aria-label="Volumen">
-            <span class="volume-percentage" id="volumePercentage">60%</span>
           </div>
-          <span onclick="volumeUp()" title="Subir volumen" role="button" tabindex="0" aria-label="Subir volumen">
+          <button onclick="volumeUp()" class="volume-icon-btn" aria-label="Subir volumen">
             <i class="material-icons">volume_up</i>
-          </span>
+          </button>
+          <span class="volume-percentage-expanded" id="volumePercentageExpanded">60%</span>
         </div>
+
+
       </div>
 
       <!-- Menú de navegación debajo del reproductor -->
