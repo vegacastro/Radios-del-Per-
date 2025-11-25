@@ -913,29 +913,49 @@ async function fetchStreamMetadataViaProxy(streamUrl) {
         // Mostrar información de la estación
         let displayText = '';
         
-        if (station.name && station.name !== 'Desconocido') {
+        // Filtrar nombres que parezcan URLs o códigos
+        const isValidName = (name) => {
+          if (!name || name === 'Desconocido') return false;
+          // Rechazar si contiene caracteres típicos de URL o códigos
+          if (name.includes('/') || name.includes('stream') || 
+              /^[a-f0-9]{20,}$/i.test(name) || name.length > 100) {
+            return false;
+          }
+          return true;
+        };
+        
+        if (isValidName(station.name)) {
           displayText = station.name;
         }
         
-        if (station.genre) {
+        if (station.genre && !station.genre.includes('/')) {
           displayText += (displayText ? ' • ' : '') + station.genre;
         }
         
-        if (station.bitrate) {
+        if (station.bitrate && Number(station.bitrate) > 0) {
           displayText += (displayText ? ' • ' : '') + station.bitrate + ' kbps';
         }
         
         if (displayText) {
           songInfoEl.textContent = displayText;
-          nowPlayingEl.style.display = 'block';
+          nowPlayingEl.style.display = 'flex';
         } else {
-          nowPlayingEl.style.display = 'none';
+          // Si no hay metadata válida, mostrar mensaje genérico
+          songInfoEl.textContent = 'En vivo';
+          nowPlayingEl.style.display = 'flex';
         }
       }
       
       return metadata;
     } else {
       console.log('[Metadata] No hay metadata disponible para este stream');
+      // Mostrar "En vivo" cuando no hay metadata
+      const nowPlayingEl = document.getElementById('nowPlaying');
+      const songInfoEl = document.getElementById('songInfo');
+      if (nowPlayingEl && songInfoEl) {
+        songInfoEl.textContent = 'En vivo';
+        nowPlayingEl.style.display = 'flex';
+      }
       return null;
     }
     
