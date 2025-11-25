@@ -732,7 +732,7 @@ body.purple .region-header .station-count {
 /* Reloj grande en la parte superior */
 .player-clock {
   position: absolute;
-  top: 60px;
+  top: 70px;
   left: 50%;
   transform: translateX(-50%);
   font-size: clamp(2rem, 8vw, 3rem);
@@ -789,7 +789,7 @@ body.purple .region-header .station-count {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  margin-top: -40px;
+  margin-top: 0px;
 }
 
 .players.active .thumbnail {
@@ -815,7 +815,7 @@ body.purple .region-header .station-count {
 /* Metadata de canción (expandido) */
 .player-metadata {
   position: absolute;
-  top: calc(50% + 165px);
+  top: calc(50% + 175px);
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
@@ -860,7 +860,7 @@ body.purple .region-header .station-count {
 /* Información de la radio (expandido) */
 .player-info-expanded {
   position: absolute;
-  bottom: 225px;
+  bottom: 235px;
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
@@ -972,7 +972,7 @@ body.purple .content small {
 /* Controles expandidos con animación */
 .player-controls-expanded {
   position: absolute;
-  bottom: 120px;
+  bottom: 135px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -1179,7 +1179,7 @@ body.purple .content small {
 /* Control de volumen expandido */
 .volume-box-expanded {
   position: absolute;
-  bottom: 40px;
+  bottom: 55px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
