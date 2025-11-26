@@ -789,7 +789,7 @@ body.purple .region-header .station-count {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  margin-top: 0px;
+  margin-top: -80px;
 }
 
 .players.active .thumbnail {
@@ -815,7 +815,7 @@ body.purple .region-header .station-count {
 /* Metadata de canción (expandido) */
 .player-metadata {
   position: absolute;
-  top: calc(50% + 175px);
+  top: calc(50% + 145px);
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
@@ -860,7 +860,7 @@ body.purple .region-header .station-count {
 /* Información de la radio (expandido) */
 .player-info-expanded {
   position: absolute;
-  bottom: 235px;
+  bottom: 270px;
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
@@ -972,7 +972,7 @@ body.purple .content small {
 /* Controles expandidos con animación */
 .player-controls-expanded {
   position: absolute;
-  bottom: 135px;
+  bottom: 115px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -1179,7 +1179,7 @@ body.purple .content small {
 /* Control de volumen expandido */
 .volume-box-expanded {
   position: absolute;
-  bottom: 55px;
+  bottom: 25px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
