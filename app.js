@@ -146,7 +146,7 @@ let musicData = [
    ciudad: "Juliaca",
    pais: "PE",
    src: "https://stream.live.novotempo.com/radio/smil:rntLimaPE.smil/playlist.m3u8",
-   imagen: "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1762603523/Radio_Andina_-_Juliaca_g7fpaw.png"
+   imagen: "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1764382295/Nuevo_Tiempo_gwmdxl.jpg"
  },
 ];
 
@@ -223,25 +223,68 @@ function toggleFavorite(id, event) {
 // 5. SISTEMA DE BÚSQUEDA Y FILTROS
 // ========================================
 function applyFilters() {
-  if (currentView !== 'home') return;
-  
-  if (showingFavorites) {
-    showingFavorites = false;
-    const headerFavBtn = document.getElementById('headerFavoritesBtn');
-    if (headerFavBtn) headerFavBtn.classList.remove('active');
-  }
-  
   const q = (searchInput.value || '').toLowerCase().trim();
-  songs = musicData.filter(m => {
-    const matchQuery = q ? (
-      (m.nombre && m.nombre.toLowerCase().includes(q)) ||
-      (m.region && m.region.toLowerCase().includes(q)) ||
-      (m.ciudad && m.ciudad.toLowerCase().includes(q))
-    ) : true;
-    return matchQuery;
-  });
-  while (musicList.firstChild) musicList.removeChild(musicList.firstChild);
-  setMusicList();
+  
+  if (currentView === 'home') {
+    // Vista Inicio
+    if (showingFavorites) {
+      showingFavorites = false;
+      const headerFavBtn = document.getElementById('headerFavoritesBtn');
+      if (headerFavBtn) headerFavBtn.classList.remove('active');
+    }
+    
+    songs = musicData.filter(m => {
+      const matchQuery = q ? (
+        (m.nombre && m.nombre.toLowerCase().includes(q)) ||
+        (m.region && m.region.toLowerCase().includes(q)) ||
+        (m.ciudad && m.ciudad.toLowerCase().includes(q))
+      ) : true;
+      return matchQuery;
+    });
+    while (musicList.firstChild) musicList.removeChild(musicList.firstChild);
+    setMusicList();
+  } 
+  else if (currentView === 'locales') {
+    // Vista Locales con búsqueda
+    if (q === '') {
+      // Si el buscador está vacío, mostrar las regiones
+      displayRegionGroups();
+    } else {
+      // Si hay búsqueda, mostrar las emisoras que coincidan
+      const filtered = musicData.filter(m => {
+        return (m.nombre && m.nombre.toLowerCase().includes(q)) ||
+               (m.region && m.region.toLowerCase().includes(q)) ||
+               (m.ciudad && m.ciudad.toLowerCase().includes(q));
+      });
+      
+      while (musicList.firstChild) musicList.removeChild(musicList.firstChild);
+      
+      const backBtn = document.createElement('button');
+      backBtn.className = 'back-to-regions';
+      backBtn.innerHTML = '<i class="material-icons">arrow_back</i> Volver';
+      backBtn.onclick = () => {
+        searchInput.value = '';
+        displayRegionGroups();
+      };
+      musicList.appendChild(backBtn);
+      
+      if (filtered.length === 0) {
+        const emptyMsg = document.createElement('div');
+        emptyMsg.style.cssText = 'padding: 40px 20px; text-align: center; color: var(--grey);';
+        emptyMsg.innerHTML = `
+          <i class="material-icons" style="font-size: 64px; opacity: 0.3;">search_off</i>
+          <p style="margin-top: 10px; font-size: 16px;">No se encontraron emisoras</p>
+          <p style="font-size: 14px; opacity: 0.7;">Intenta con otro nombre o región</p>
+        `;
+        musicList.appendChild(emptyMsg);
+      } else {
+        filtered.forEach(station => {
+          const stationDiv = createStationCard(station);
+          musicList.appendChild(stationDiv);
+        });
+      }
+    }
+  }
 }
 
 searchInput.addEventListener('input', applyFilters);
@@ -280,6 +323,7 @@ function showLocales() {
     showingFavorites = false;
   }
   
+  searchInput.value = '';
   displayRegionGroups();
 }
 
@@ -362,24 +406,10 @@ function refreshStations() {
 function displayRegionGroups() {
   while (musicList.firstChild) musicList.removeChild(musicList.firstChild);
   
-  const totalStations = musicData.length;
-  const allRegionDiv = document.createElement('div');
-  allRegionDiv.className = 'region-group';
-  allRegionDiv.innerHTML = `
-    <div class="region-header region-header-all" onclick="toggleRegion('Todas')">
-      <h3><i class="material-icons" style="font-size: 1.2rem; margin-right: 8px; color: var(--primary);">radio</i>Todas <span class="station-count">(${totalStations})</span></h3>
-      <i class="material-icons">expand_more</i>
-    </div>
-    <div class="region-content" id="region-Todas">
-    </div>
-  `;
-  musicList.appendChild(allRegionDiv);
-  
-  const allContentDiv = allRegionDiv.querySelector('.region-content');
-  musicData.forEach(station => {
-    const stationDiv = createStationCard(station);
-    allContentDiv.appendChild(stationDiv);
-  });
+  // Contenedor para las tarjetas de región
+  const containerDiv = document.createElement('div');
+  containerDiv.className = 'regions-container';
+  musicList.appendChild(containerDiv);
   
   const regionGroups = {};
   musicData.forEach(station => {
@@ -390,24 +420,34 @@ function displayRegionGroups() {
     regionGroups[region].push(station);
   });
   
+  // Agregar "Todas" al inicio
+  const todosCard = document.createElement('div');
+  todosCard.className = 'region-card';
+  todosCard.innerHTML = `
+    <div class="region-card-header">
+      <h3>Todas</h3>
+      <span class="region-card-count">${musicData.length} emisoras</span>
+    </div>
+    <button class="region-card-btn" onclick="showAllStations()">
+      <i class="material-icons">chevron_right</i>
+    </button>
+  `;
+  containerDiv.appendChild(todosCard);
+  
+  // Agregar tarjetas por región
   Object.keys(regionGroups).sort().forEach(region => {
-    const regionDiv = document.createElement('div');
-    regionDiv.className = 'region-group';
-    regionDiv.innerHTML = `
-      <div class="region-header" onclick="toggleRegion('${region}')">
-        <h3>${region} <span class="station-count">(${regionGroups[region].length})</span></h3>
-        <i class="material-icons">expand_more</i>
+    const card = document.createElement('div');
+    card.className = 'region-card';
+    card.innerHTML = `
+      <div class="region-card-header">
+        <h3>${region}</h3>
+        <span class="region-card-count">${regionGroups[region].length} emisoras</span>
       </div>
-      <div class="region-content" id="region-${region.replace(/\s+/g, '-')}">
-      </div>
+      <button class="region-card-btn" onclick="showRegionStations('${region}')">
+        <i class="material-icons">chevron_right</i>
+      </button>
     `;
-    musicList.appendChild(regionDiv);
-    
-    const contentDiv = regionDiv.querySelector('.region-content');
-    regionGroups[region].forEach(station => {
-      const stationDiv = createStationCard(station);
-      contentDiv.appendChild(stationDiv);
-    });
+    containerDiv.appendChild(card);
   });
 }
 
@@ -424,6 +464,56 @@ function toggleRegion(region) {
     content.classList.add('expanded');
     icon.textContent = 'expand_less';
   }
+}
+
+
+function showAllStations() {
+  const regionGroups = {};
+  musicData.forEach(station => {
+    const region = station.region || 'Sin región';
+    if (!regionGroups[region]) {
+      regionGroups[region] = [];
+    }
+    regionGroups[region].push(station);
+  });
+  
+  while (musicList.firstChild) musicList.removeChild(musicList.firstChild);
+  
+  const backBtn = document.createElement('button');
+  backBtn.className = 'back-to-regions';
+  backBtn.innerHTML = '<i class="material-icons">arrow_back</i> Volver';
+  backBtn.onclick = displayRegionGroups;
+  musicList.appendChild(backBtn);
+  
+  musicData.forEach(station => {
+    const stationDiv = createStationCard(station);
+    musicList.appendChild(stationDiv);
+  });
+}
+
+function showRegionStations(region) {
+  const regionGroups = {};
+  musicData.forEach(station => {
+    const stationRegion = station.region || 'Sin región';
+    if (!regionGroups[stationRegion]) {
+      regionGroups[stationRegion] = [];
+    }
+    regionGroups[stationRegion].push(station);
+  });
+  
+  while (musicList.firstChild) musicList.removeChild(musicList.firstChild);
+  
+  const backBtn = document.createElement('button');
+  backBtn.className = 'back-to-regions';
+  backBtn.innerHTML = '<i class="material-icons">arrow_back</i> Volver';
+  backBtn.onclick = displayRegionGroups;
+  musicList.appendChild(backBtn);
+  
+  // Mostrar emisoras en modo lista (como en "Todas")
+  regionGroups[region].forEach(station => {
+    const stationDiv = createStationCard(station);
+    musicList.appendChild(stationDiv);
+  });
 }
 
 // ========================================
