@@ -150,17 +150,22 @@ button {
 }
 
 .header {
-  margin: 0 10px;
-  padding: 8px 10px;
+  margin: 0;
+  padding: 12px 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   border-bottom: 2px solid #ccc;
   color: var(--grey);
   flex-wrap: nowrap;
-  gap: 8px;
-  min-height: 50px;
+  gap: 15px;
+  min-height: 60px;
   flex-shrink: 0;
+}
+
+/* Permitir posicionar botones del header a la derecha sin afectar el centrado del buscador */
+.header {
+  position: relative;
 }
 
 .header h4 {
@@ -171,25 +176,30 @@ button {
 }
 
 .header-search {
-  flex: 1;
+  flex: 0 1 700px;
   position: relative;
   display: flex;
   align-items: center;
-  max-width: 200px;
-  margin: 0 8px;
+  max-width: 100%;
+  width: 70%;
+  max-width: 720px;
+  margin: 0 auto;
+  /* dejar espacio a la derecha para los botones del header */
+  padding-right: 50px;
 }
 
 .header-search input {
   width: 100%;
-  padding: 6px 30px 6px 10px;
-  border-radius: 20px;
-  border: 1px solid #e6e6e6;
+  padding: 10px 44px 10px 16px; /* espacio a la derecha para icono dentro del input */
+  border-radius: 24px;
+  border: 2px solid #e6e6e6;
   background: #f9f9f9;
   color: #000;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 500;
   outline: none;
-  transition: all 0.3s;
+  transition: box-shadow 0.18s, border-color 0.18s, background 0.18s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 .header-search input::placeholder {
@@ -206,9 +216,54 @@ button {
 .header-search .material-icons {
   position: absolute;
   right: 8px;
-  font-size: 18px;
+  font-size: 20px;
   color: #999;
   pointer-events: none;
+  cursor: default;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.18s, transform 0.12s, color 0.18s;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.header-search .material-icons.clickable {
+  cursor: pointer;
+  background: rgba(0,0,0,0.08);
+  color: #333;
+}
+
+/* Estilos para que el icono luzca correctamente en temas oscuros */
+body.dark .header-search .material-icons,
+body.blue .header-search .material-icons,
+body.green .header-search .material-icons,
+body.purple .header-search .material-icons {
+  color: rgba(255,255,255,0.6);
+}
+
+body.dark .header-search .material-icons.clickable,
+body.blue .header-search .material-icons.clickable,
+body.green .header-search .material-icons.clickable,
+body.purple .header-search .material-icons.clickable {
+  color: rgba(255,255,255,0.95);
+  background: rgba(255,255,255,0.12);
+}
+
+.header-search .material-icons.clickable:hover {
+  transform: translateY(-50%) scale(1.1);
+  background: rgba(0,0,0,0.12);
+}
+
+body.dark .header-search .material-icons.clickable:hover,
+body.blue .header-search .material-icons.clickable:hover,
+body.green .header-search .material-icons.clickable:hover,
+body.purple .header-search .material-icons.clickable:hover {
+  background: rgba(255,255,255,0.18);
 }
 
 .header h3 {
@@ -293,6 +348,41 @@ body.purple .header-search .material-icons {
   align-items: center;
 }
 
+/* Colocar los botones (tema) en el extremo derecho manteniendo la búsqueda centrada */
+.header-buttons {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+}
+
+@media (max-width: 420px) {
+  .header {
+    padding: 10px 8px;
+    justify-content: center;
+    gap: 8px;
+  }
+  .header-buttons {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .header-search {
+    /* expandir la barra de búsqueda al máximo en móviles */
+    width: calc(100% - 80px);
+    max-width: none;
+    padding-right: 0;
+    margin: 0;
+    flex: 1 1 auto;
+  }
+  .header-search input {
+    padding: 10px 44px 10px 16px;
+    border-radius: 20px;
+  }
+}
+
 .header button {
   color: var(--grey);
   padding: 6px;
@@ -305,8 +395,8 @@ body.purple .header-search .material-icons {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: clamp(36px, 9vw, 40px);
-  height: clamp(36px, 9vw, 40px);
+  width: 40px;
+  height: 40px;
 }
 
 .header button:hover {
@@ -347,9 +437,93 @@ body.purple .header-search .material-icons {
   transform: rotate(180deg) scale(0.95);
 }
 
-.header button .material-icons {
-  font-size: clamp(20px, 5vw, 24px);
+/* Estilos específicos para botón de tema - SIN SOMBRAS NI EFECTOS */
+.dark-mode-btn {
+  position: relative !important;
+  z-index: 50 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  padding: 6px !important;
+  width: 40px !important;
+  height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.dark-mode-btn::before,
+.dark-mode-btn::after {
+  display: none !important;
+}
+
+.dark-mode-btn .material-icons {
+  font-size: 24px !important;
   color: var(--grey);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  font-weight: 400;
+  font-variation-settings: none;
+  letter-spacing: 0;
+  font-feature-settings: "liga" 0;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+
+.dark-mode-btn:hover {
+  background: rgba(243, 52, 73, 0.1) !important;
+  box-shadow: none !important;
+}
+
+.dark-mode-btn:hover .material-icons {
+  color: var(--grey);
+}
+
+.dark-mode-btn:active {
+  transform: scale(0.95);
+}
+
+body.dark .dark-mode-btn .material-icons {
+  color: #fff;
+}
+
+body.dark .dark-mode-btn:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: none !important;
+}
+
+body.blue .dark-mode-btn .material-icons,
+body.green .dark-mode-btn .material-icons,
+body.purple .dark-mode-btn .material-icons {
+  color: #fff;
+}
+
+body.blue .dark-mode-btn:hover,
+body.green .dark-mode-btn:hover,
+body.purple .dark-mode-btn:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: none !important;
+}
+
+.header button .material-icons {
+  font-size: 24px;
+  color: var(--grey);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body.dark .header button .material-icons {
@@ -495,6 +669,196 @@ body.dark .header button:hover {
 }
 
 /* Estilos para vista de regiones */
+.regions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 1rem 1rem;
+}
+
+.region-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 1.5rem;
+  background: linear-gradient(135deg, #4a90a4 0%, #5ba3b8 100%);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  min-height: 70px;
+}
+
+.region-card:hover {
+  background: linear-gradient(135deg, #5ba3b8 0%, #6bb4ca 100%);
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.region-card-header {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.region-card-header h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.region-card-count {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 3px;
+  opacity: 0.95;
+}
+
+.region-card-btn {
+  background: rgba(255, 255, 255, 0.25);
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #ffffff;
+  font-size: 1.3rem;
+  margin-left: 1rem;
+  flex-shrink: 0;
+}
+
+.region-card-btn:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.1);
+}
+
+.region-card-btn i {
+  color: #ffffff;
+}
+
+.back-to-regions {
+  background: linear-gradient(135deg, #4a90a4 0%, #5ba3b8 100%);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.back-to-regions:hover {
+  background: linear-gradient(135deg, #5ba3b8 0%, #6bb4ca 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.region-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 1rem 1rem 0.5rem 1rem;
+  color: var(--grey);
+}
+
+/* Estilos para tarjetas de estaciones en vista de región */
+.stations-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+}
+
+.station-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.2rem;
+  background: transparent;
+  border-radius: 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  box-shadow: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  min-height: auto;
+}
+
+.station-card:last-child {
+  border-bottom: none;
+}
+
+.station-card:hover {
+  background: rgba(74, 144, 226, 0.1);
+  transform: none;
+  box-shadow: none;
+}
+
+.station-card-header {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.station-card-header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--grey);
+  margin: 0;
+  text-shadow: none;
+  line-height: 1.4;
+}
+
+.station-card-info {
+  font-size: 0.8rem;
+  color: var(--primary);
+  margin-top: 2px;
+  opacity: 1;
+}
+
+.station-card-city {
+  color: var(--primary);
+}
+
+.station-card-btn {
+  background: transparent;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--primary);
+  font-size: 1.2rem;
+  margin-left: 1rem;
+  flex-shrink: 0;
+}
+
+.station-card-btn:hover {
+  background: rgba(74, 144, 226, 0.15);
+  transform: scale(1.1);
+}
+
+.station-card-btn i {
+  color: #ffffff;
+}
+
 .region-group {
   margin-bottom: 0.8rem;
 }
@@ -829,13 +1193,9 @@ body.purple .region-header .station-count {
   justify-content: center;
   gap: 10px;
   padding: 16px 28px;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(20px);
-  border-radius: 30px;
   color: rgba(255, 255, 255, 0.98);
   font-size: clamp(0.9rem, 2.8vw, 1.05rem);
   font-weight: 600;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
   text-align: center;
   line-height: 1.4;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);

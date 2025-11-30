@@ -287,7 +287,42 @@ function applyFilters() {
   }
 }
 
-searchInput.addEventListener('input', applyFilters);
+// Mejor comportamiento: actualiza icono y aplica filtros
+const headerSearchIcon = document.querySelector('.header-search .material-icons');
+
+function updateSearchIcon() {
+  if (!headerSearchIcon) return;
+  const hasValue = (searchInput.value || '').toString().trim().length > 0;
+  if (hasValue) {
+    headerSearchIcon.textContent = 'close';
+    headerSearchIcon.classList.add('clickable');
+  } else {
+    headerSearchIcon.textContent = 'search';
+    headerSearchIcon.classList.remove('clickable');
+  }
+}
+
+searchInput.addEventListener('input', (e) => {
+  updateSearchIcon();
+  applyFilters();
+});
+
+if (headerSearchIcon) {
+  headerSearchIcon.addEventListener('click', (e) => {
+    if (headerSearchIcon.classList.contains('clickable')) {
+      searchInput.value = '';
+      updateSearchIcon();
+      applyFilters();
+      searchInput.focus();
+    } else {
+      // opcional: enfocar campo de búsqueda
+      searchInput.focus();
+    }
+  });
+}
+
+// inicializar estado del icono
+updateSearchIcon();
 
 // ========================================
 // 6. NAVEGACIÓN DE MENÚ
