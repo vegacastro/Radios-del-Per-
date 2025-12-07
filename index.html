@@ -52,12 +52,26 @@
   <!-- Sección principal con lista de radios -->
   <section class="sec sec-2" id="sec-2">
 
-    <header class="header">
-      <div class="header-search">
-        <input id="searchInput" type="search" placeholder="Buscar..." aria-label="Buscar estación">
+    <header class="header" id="mainHeader">
+      <button id="regionBackBtn" class="region-back-btn" onclick="goBackToList()" aria-label="Volver" style="display:none;">
+        <i class="material-icons">arrow_back</i>
+      </button>
+
+      <h3 id="headerTitle" class="header-title" style="display:none;">Región</h3>
+
+      <div class="header-search" id="headerSearch">
+        <button id="searchBackBtn" class="header-search-back" type="button" title="Volver a región" aria-label="Volver a región" style="display:none;">
+          <i class="material-icons">arrow_back</i>
+        </button>
+        <input id="searchInput" type="search" placeholder="Buscar emisora o podcast" aria-label="Buscar estación">
         <i class="material-icons">search</i>
       </div>
+
       <div class="header-buttons">
+        <button id="regionSearchBtn" type="button" class="header-search-btn" onclick="focusSearch()" title="Buscar" aria-label="Buscar" style="display:none;">
+          <i class="material-icons">search</i>
+        </button>
+
         <button type="button" class="dark-mode-btn" onclick="darkMood()" title="Cambiar tema oscuro/claro" aria-label="Cambiar tema oscuro/claro">
           <i class="material-icons">dark_mode</i>
         </button>
@@ -151,7 +165,6 @@
           <button onclick="volumeUp()" class="volume-icon-btn" aria-label="Subir volumen">
             <i class="material-icons">volume_up</i>
           </button>
-          <span class="volume-percentage-expanded" id="volumePercentageExpanded">60%</span>
         </div>
 
 
@@ -170,6 +183,10 @@
         <button type="button" id="worldBtn" class="menu-btn" onclick="showWorld()" title="World" aria-label="World">
           <i class="material-icons">language</i>
           <span>World</span>
+        </button>
+        <button type="button" id="genresBtn" class="menu-btn" onclick="showGenres()" title="Géneros" aria-label="Géneros">
+          <i class="material-icons">local_offer</i>
+          <span>Géneros</span>
         </button>
         <button type="button" id="favoritesBtn" class="menu-btn" onclick="showFavorites()" title="Favoritos" aria-label="Favoritos">
           <i class="material-icons">favorite</i>

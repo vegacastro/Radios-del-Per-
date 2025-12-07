@@ -36,6 +36,7 @@ let musicData = [
    nombre: "RPP Noticias 89.7 FM",
    region: "Lima",
    ciudad: "Lima",
+   genero: "Noticias",
    pais: "PE",
    src: "https://us-b4-p-e-cg11-audio.cdn.mdstrm.com/live-audio-aw/5fab3416b5f9ef165cfab6e9?aid=5faaeb72f92d7b07dfe10181&pid=IdIxkImeJkX6SluruCIGnCjpDGUEmxSc&sid=MLEWn90LeAbSA3uTlZAOuA24XQTy1wNj&uid=jBAwJyilyg060ipKKG9WL66hwjA2r29x&es=us-b4-p-e-cg11-audio.cdn.mdstrm.com&ote=1649278995736&ot=1Es9zP2YKsEwqKiVxHs9ag&proto=https&pz=us&cP=128000&awCollectionId=5faaeb72f92d7b07dfe10181&liveId=5fab3416b5f9ef165cfab6e9&referer=https%3A%2F%2Fradios.com.pe%2F",
    imagen: "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1762604027/Rpp_Noticias_d6xjur.jpg"
@@ -45,69 +46,77 @@ let musicData = [
    nombre: "Ritmo Romántica 93.1 FM",
    region: "Lima",
    ciudad: "Lima",
+    genero: "Romántico",
    pais: "PE",
    src: "https://us-b4-p-e-cg11-audio.cdn.mdstrm.com/live-audio-aw/6839e2376607bdf6b2fcde27",
-   imagen: "https://mytuner.global.ssl.fastly.net/media/tvos_radios/VZd6pyTMTY.png"
+   imagen: "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1764545064/Ritmo_Rom%C3%A1ntica_yly2di.png"
  },
  {
    id: 3,
    nombre: "La Ribereña 94.1 FM",
    region: "Moquegua",
    ciudad: "Moquegua",
+   genero: "Variedad",
    pais: "PE",
    src: "https://stream.zeno.fm/sed22b6595quv",
-   imagen: "https://play-lh.googleusercontent.com/8joBO-ZWZzygAsiT-EWoNTL8i5ephUiB-hNWEGSYioZYAL91otTzGHS7Y6q95LWAREo"
+   imagen: "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1764543583/Ribere%C3%B1a_-_Moquegua_bjwm9m.jpg"
  },
  {
    id: 4,
    nombre: "Radio Corazón",
    region: "Lima",
    ciudad: "Lima",
+   genero: "Romántico",
    pais: "PE",
    src: "https://mdstrm.com/audio/5fada514fc16c006bd63370f/icecast.audio",
-   imagen: "https://mytuner.global.ssl.fastly.net/media/tvos_radios/eLk5CpPL4E.jpg"
+   imagen: "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1764545979/Radio_Corazon_ddkvv8.jpg"
  },
  {
    id: 5,
    nombre: "Radio Ritmo y Romance",
    region: "Lima",
    ciudad: "Lima",
+    genero: "Romántico",
    pais: "PE",
    src: "https://stream.zeno.fm/7glwqektfbjvv",
-   imagen: "https://i.ibb.co/D4BdW1v/microfono.png"
+   imagen: "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1764546196/Ritmo_y_Romance_o7jhbt.jpg"
  },
  {
    id: 6,
    nombre: "Radio Latina 990 AM La Poderosa",
    region: "Lima",
    ciudad: "Lima",
+   genero: "Variedad",
    pais: "PE",
    src: "https://stm2.srvif.com:7974/stream",
-   imagen: "https://i.ibb.co/D4BdW1v/microfono.png"
+   imagen: "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1764547319/Latina_La_Poderosa_-_Lima_ev0cri.jpg"
  },
  {
    id: 7,
    nombre: "Radio del Progreso 107.7 FM",
    region: "Ucayali",
    ciudad: "Pucallpa",
+   genero: "Variedad",
    pais: "PE",
    src: "https://conectperu.com:7036/stream?icy=http",
-   imagen: "https://i.ibb.co/D4BdW1v/microfono.png"
+   imagen: "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1764546457/Radio_Del_Progreso_-_Pucallpa_hl8dmj.jpg"
  },
  {
    id: 8,
    nombre: "La Ribereña 93.7 FM",
    region: "San Martín",
    ciudad: "Bellavista",
+   genero: "Variedad",
    pais: "PE",
    src: "https://panelautodj.innovatestream.pe:10928/stream",
-   imagen: "https://i.ibb.co/D4BdW1v/microfono.png"
+   imagen: "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1764546778/La_Ribere%C3%B1a_-_Bellavista_ij2g4f.jpg"
  },
  {
    id: 9,
    nombre: "Radio San Juan 89.5 FM",
    region: "Cuzco",
    ciudad: "Checacupe",
+   genero: "Variedad",
    pais: "PE",
    src: "https://audio.miradioenvivo.com:10864/stream",
    imagen: "https://i.ibb.co/D4BdW1v/microfono.png"
@@ -117,24 +126,27 @@ let musicData = [
    nombre: "Radio Atmosfera 92.3 FM",
    region: "San Martín",
    ciudad: "Moyobamba",
+    genero: "Cumbia",
    pais: "PE",
    src: "https://panelautodj.innovatestream.pe:10742/;",
-   imagen: "https://i.ibb.co/D4BdW1v/microfono.png"
+   imagen: "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1764542732/Radio_Atmosfera_-_Moyobamba_hht040.jpg"
  },
  {
    id: 11,
    nombre: "Radio Ribereña 93.9 FM",
    region: "Ica",
    ciudad: "Chincha Alta",
+   genero: "Variedad",
    pais: "PE",
    src: "https://panel.innovatestream.pe:10938/;",
-   imagen: "https://i.ibb.co/D4BdW1v/microfono.png"
+   imagen: "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1764543583/Ribere%C3%B1a_-_Chincha_a0dpco.png"
  },
  {
    id: 12,
    nombre: "Radio Andina 1360 AM",
    region: "Puno",
    ciudad: "Juliaca",
+    genero: "Huayno",
    pais: "PE",
    src: "https://sp.oyotunstream.com:10983/;",
    imagen: "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1762603523/Radio_Andina_-_Juliaca_g7fpaw.png"
@@ -144,6 +156,7 @@ let musicData = [
    nombre: "Radio Nuevo Tiempo",
    region: "Puno",
    ciudad: "Juliaca",
+   genero: "Religioso",
    pais: "PE",
    src: "https://stream.live.novotempo.com/radio/smil:rntLimaPE.smil/playlist.m3u8",
    imagen: "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1764382295/Nuevo_Tiempo_gwmdxl.jpg"
@@ -159,6 +172,8 @@ let songs = musicData.slice();
 let favorites = [];
 let showingFavorites = false;
 let currentView = 'home';
+// Región actualmente abierta (null cuando no se está dentro de una región)
+let currentRegion = null;
 
 // ========================================
 // 4. SISTEMA DE FAVORITOS
@@ -247,27 +262,28 @@ function applyFilters() {
   else if (currentView === 'locales') {
     // Vista Locales con búsqueda
     if (q === '') {
-      // Si el buscador está vacío, mostrar las regiones
-      displayRegionGroups();
+      // Si el buscador está vacío, mostrar las regiones o la lista de la región actual
+      if (currentRegion === '__all__') {
+        showAllStations();
+      } else if (currentRegion) {
+        showRegionStations(currentRegion);
+      } else {
+        displayRegionGroups();
+      }
     } else {
-      // Si hay búsqueda, mostrar las emisoras que coincidan
-      const filtered = musicData.filter(m => {
+      // Si hay búsqueda, mostrar las emisoras que coincidan.
+      // Si estamos dentro de una región (y no es "todas"), limitar la búsqueda a esa región.
+      const baseList = (currentRegion && currentRegion !== '__all__') 
+        ? musicData.filter(m => (m.region || '') === currentRegion) 
+        : musicData;
+      const filtered = baseList.filter(m => {
         return (m.nombre && m.nombre.toLowerCase().includes(q)) ||
                (m.region && m.region.toLowerCase().includes(q)) ||
                (m.ciudad && m.ciudad.toLowerCase().includes(q));
       });
-      
+
       while (musicList.firstChild) musicList.removeChild(musicList.firstChild);
-      
-      const backBtn = document.createElement('button');
-      backBtn.className = 'back-to-regions';
-      backBtn.innerHTML = '<i class="material-icons">arrow_back</i> Volver';
-      backBtn.onclick = () => {
-        searchInput.value = '';
-        displayRegionGroups();
-      };
-      musicList.appendChild(backBtn);
-      
+
       if (filtered.length === 0) {
         const emptyMsg = document.createElement('div');
         emptyMsg.style.cssText = 'padding: 40px 20px; text-align: center; color: var(--grey);';
@@ -275,6 +291,48 @@ function applyFilters() {
           <i class="material-icons" style="font-size: 64px; opacity: 0.3;">search_off</i>
           <p style="margin-top: 10px; font-size: 16px;">No se encontraron emisoras</p>
           <p style="font-size: 14px; opacity: 0.7;">Intenta con otro nombre o región</p>
+        `;
+        musicList.appendChild(emptyMsg);
+      } else {
+        filtered.forEach(station => {
+          const stationDiv = createStationCard(station);
+          musicList.appendChild(stationDiv);
+        });
+      }
+    }
+  }
+  else if (currentView === 'genres') {
+    // Vista Géneros con búsqueda
+    if (q === '') {
+      // Si el buscador está vacío, mostrar los géneros o la lista del género actual
+      if (currentGenre === '__all__') {
+        showAllGenreStations();
+      } else if (currentGenre) {
+        showGenreStations(currentGenre);
+      } else {
+        displayGenreGroups();
+      }
+    } else {
+      // Si hay búsqueda, mostrar las emisoras que coincidan.
+      // Si estamos dentro de un género (y no es "todos"), limitar la búsqueda a ese género.
+      const baseList = (currentGenre && currentGenre !== '__all__') 
+        ? musicData.filter(m => (m.genero || 'Sin género') === currentGenre) 
+        : musicData;
+      const filtered = baseList.filter(m => {
+        return (m.nombre && m.nombre.toLowerCase().includes(q)) ||
+               (m.genero && m.genero.toLowerCase().includes(q)) ||
+               (m.ciudad && m.ciudad.toLowerCase().includes(q));
+      });
+
+      while (musicList.firstChild) musicList.removeChild(musicList.firstChild);
+
+      if (filtered.length === 0) {
+        const emptyMsg = document.createElement('div');
+        emptyMsg.style.cssText = 'padding: 40px 20px; text-align: center; color: var(--grey);';
+        emptyMsg.innerHTML = `
+          <i class="material-icons" style="font-size: 64px; opacity: 0.3;">search_off</i>
+          <p style="margin-top: 10px; font-size: 16px;">No se encontraron emisoras</p>
+          <p style="font-size: 14px; opacity: 0.7;">Intenta con otro nombre o género</p>
         `;
         musicList.appendChild(emptyMsg);
       } else {
@@ -324,6 +382,46 @@ if (headerSearchIcon) {
 // inicializar estado del icono
 updateSearchIcon();
 
+// Botón interno del buscador para volver a la lista de la región/género actual
+const searchBackBtn = document.getElementById('searchBackBtn');
+if (searchBackBtn) {
+  searchBackBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    // limpiar búsqueda
+    searchInput.value = '';
+    updateSearchIcon();
+    applyFilters();
+    // cerrar buscador
+    const headerSearch = document.getElementById('headerSearch');
+    const searchBtn = document.getElementById('regionSearchBtn');
+    
+    if (headerSearch) headerSearch.classList.remove('active');
+    
+    // Restaurar visibilidad de lupa
+    if (searchBtn) searchBtn.style.display = 'inline-flex';
+    
+    // Según la vista actual, volver a la lista correspondiente
+    if (currentView === 'genres') {
+      if (currentGenre === '__all__') {
+        showAllGenreStations();
+      } else if (currentGenre) {
+        showGenreStations(currentGenre);
+      } else {
+        displayGenreGroups();
+      }
+    } else {
+      // Vista locales
+      if (currentRegion === '__all__') {
+        showAllStations();
+      } else if (currentRegion) {
+        showRegionStations(currentRegion);
+      } else {
+        displayRegionGroups();
+      }
+    }
+  });
+}
+
 // ========================================
 // 6. NAVEGACIÓN DE MENÚ
 // ========================================
@@ -333,6 +431,7 @@ function showHome() {
   document.getElementById('homeBtn').classList.add('active');
   document.getElementById('localesBtn').classList.remove('active');
   document.getElementById('worldBtn').classList.remove('active');
+  document.getElementById('genresBtn')?.classList.remove('active');
   document.getElementById('favoritesBtn').classList.remove('active');
   
   if (showingFavorites) {
@@ -352,6 +451,7 @@ function showLocales() {
   document.getElementById('homeBtn').classList.remove('active');
   document.getElementById('localesBtn').classList.add('active');
   document.getElementById('worldBtn').classList.remove('active');
+  document.getElementById('genresBtn')?.classList.remove('active');
   document.getElementById('favoritesBtn').classList.remove('active');
   
   if (showingFavorites) {
@@ -368,6 +468,7 @@ function showWorld() {
   document.getElementById('homeBtn').classList.remove('active');
   document.getElementById('localesBtn').classList.remove('active');
   document.getElementById('worldBtn').classList.add('active');
+  document.getElementById('genresBtn')?.classList.remove('active');
   document.getElementById('favoritesBtn').classList.remove('active');
   
   if (showingFavorites) {
@@ -388,12 +489,151 @@ function showWorld() {
   musicList.scrollTop = 0;
 }
 
+// Variable para almacenar el género actual
+let currentGenre = null;
+
+function showGenres() {
+  currentView = 'genres';
+  
+  document.getElementById('homeBtn').classList.remove('active');
+  document.getElementById('localesBtn').classList.remove('active');
+  document.getElementById('worldBtn').classList.remove('active');
+  document.getElementById('genresBtn')?.classList.add('active');
+  document.getElementById('favoritesBtn').classList.remove('active');
+  
+  if (showingFavorites) {
+    showingFavorites = false;
+  }
+  
+  searchInput.value = '';
+  displayGenreGroups();
+}
+
+// Mostrar tarjetas de géneros
+function displayGenreGroups() {
+  // Restaurar header al estado normal
+  document.getElementById('mainHeader')?.classList.remove('region-view');
+  const backBtn = document.getElementById('regionBackBtn');
+  const title = document.getElementById('headerTitle');
+  const searchBtn = document.getElementById('regionSearchBtn');
+  const search = document.getElementById('headerSearch');
+  const darkBtn = document.querySelector('.dark-mode-btn');
+  const input = document.getElementById('searchInput');
+  
+  if (backBtn) backBtn.style.display = 'none';
+  if (title) title.style.display = 'none';
+  if (searchBtn) searchBtn.style.display = 'none';
+  if (search) search.classList.remove('active');
+  if (darkBtn) darkBtn.style.display = 'flex';
+  if (input) input.value = '';
+  currentGenre = null;
+  updateSearchIcon();
+  
+  while (musicList.firstChild) musicList.removeChild(musicList.firstChild);
+
+  // Contenedor para las tarjetas de género
+  const containerDiv = document.createElement('div');
+  containerDiv.className = 'regions-container';
+  musicList.appendChild(containerDiv);
+
+  // Agrupar por género
+  const genreGroups = {};
+  musicData.forEach(station => {
+    const genre = station.genero || 'Sin género';
+    if (!genreGroups[genre]) {
+      genreGroups[genre] = [];
+    }
+    genreGroups[genre].push(station);
+  });
+
+  // Agregar tarjetas por género
+  Object.keys(genreGroups).sort().forEach(genre => {
+    const card = document.createElement('div');
+    card.className = 'region-card';
+    card.innerHTML = `
+      <div class="region-card-header">
+        <h3>${genre}</h3>
+        <span class="region-card-count">${genreGroups[genre].length} emisoras</span>
+      </div>
+      <button class="region-card-btn" onclick="showGenreStations('${genre.replace(/'/g, "\\'")}')">
+        <i class="material-icons">chevron_right</i>
+      </button>
+    `;
+    containerDiv.appendChild(card);
+  });
+}
+
+// Mostrar todas las emisoras de todos los géneros
+function showAllGenreStations() {
+  while (musicList.firstChild) musicList.removeChild(musicList.firstChild);
+  
+  musicData.forEach(station => {
+    const stationDiv = createStationCard(station);
+    musicList.appendChild(stationDiv);
+  });
+
+  // Cambiar header a estilo region con título "Todas las emisoras"
+  currentGenre = '__all__';
+  const header = document.getElementById('mainHeader');
+  const regionBackBtn = document.getElementById('regionBackBtn');
+  const headerTitle = document.getElementById('headerTitle');
+  const regionSearchBtn = document.getElementById('regionSearchBtn');
+  const headerSearch = document.getElementById('headerSearch');
+  const darkModeBtn = document.querySelector('.dark-mode-btn');
+
+  if (header) header.classList.add('region-view');
+  if (regionBackBtn) regionBackBtn.style.display = 'inline-flex';
+  if (headerTitle) { headerTitle.style.display = 'inline-block'; headerTitle.textContent = 'Todas las emisoras'; }
+  if (regionSearchBtn) regionSearchBtn.style.display = 'inline-flex';
+  if (headerSearch) headerSearch.classList.remove('active');
+  if (darkModeBtn) darkModeBtn.style.display = 'none';
+}
+
+// Mostrar emisoras de un género específico
+function showGenreStations(genre) {
+  const genreGroups = {};
+  musicData.forEach(station => {
+    const stationGenre = station.genero || 'Sin género';
+    if (!genreGroups[stationGenre]) {
+      genreGroups[stationGenre] = [];
+    }
+    genreGroups[stationGenre].push(station);
+  });
+  
+  while (musicList.firstChild) musicList.removeChild(musicList.firstChild);
+  
+  // Mostrar emisoras del género
+  if (genreGroups[genre]) {
+    genreGroups[genre].forEach(station => {
+      const stationDiv = createStationCard(station);
+      musicList.appendChild(stationDiv);
+    });
+  }
+
+  // Cambiar header a estilo region
+  currentGenre = genre;
+  const header = document.getElementById('mainHeader');
+  const regionBackBtn = document.getElementById('regionBackBtn');
+  const headerTitle = document.getElementById('headerTitle');
+  const regionSearchBtn = document.getElementById('regionSearchBtn');
+  const headerSearch = document.getElementById('headerSearch');
+  const darkModeBtn = document.querySelector('.dark-mode-btn');
+
+  if (header) header.classList.add('region-view');
+  if (regionBackBtn) { regionBackBtn.style.display = 'inline-flex'; }
+  if (headerTitle) { headerTitle.style.display = 'inline-block'; headerTitle.textContent = genre; }
+  if (regionSearchBtn) regionSearchBtn.style.display = 'inline-flex';
+  if (headerSearch) headerSearch.classList.remove('active');
+  if (darkModeBtn) darkModeBtn.style.display = 'none';
+}
+
 function showFavorites() {
   currentView = 'favorites';
   
   document.getElementById('homeBtn').classList.remove('active');
   document.getElementById('localesBtn').classList.remove('active');
   document.getElementById('worldBtn').classList.remove('active');
+  document.getElementById('genresBtn')?.classList.remove('active');
   document.getElementById('favoritesBtn').classList.add('active');
   
   if (!showingFavorites) {
@@ -435,56 +675,7 @@ function refreshStations() {
   musicList.scrollTop = 0;
 }
 
-// ========================================
-// 7. VISTA DE REGIONES AGRUPADAS
-// ========================================
-function displayRegionGroups() {
-  while (musicList.firstChild) musicList.removeChild(musicList.firstChild);
-  
-  // Contenedor para las tarjetas de región
-  const containerDiv = document.createElement('div');
-  containerDiv.className = 'regions-container';
-  musicList.appendChild(containerDiv);
-  
-  const regionGroups = {};
-  musicData.forEach(station => {
-    const region = station.region || 'Sin región';
-    if (!regionGroups[region]) {
-      regionGroups[region] = [];
-    }
-    regionGroups[region].push(station);
-  });
-  
-  // Agregar "Todas" al inicio
-  const todosCard = document.createElement('div');
-  todosCard.className = 'region-card';
-  todosCard.innerHTML = `
-    <div class="region-card-header">
-      <h3>Todas</h3>
-      <span class="region-card-count">${musicData.length} emisoras</span>
-    </div>
-    <button class="region-card-btn" onclick="showAllStations()">
-      <i class="material-icons">chevron_right</i>
-    </button>
-  `;
-  containerDiv.appendChild(todosCard);
-  
-  // Agregar tarjetas por región
-  Object.keys(regionGroups).sort().forEach(region => {
-    const card = document.createElement('div');
-    card.className = 'region-card';
-    card.innerHTML = `
-      <div class="region-card-header">
-        <h3>${region}</h3>
-        <span class="region-card-count">${regionGroups[region].length} emisoras</span>
-      </div>
-      <button class="region-card-btn" onclick="showRegionStations('${region}')">
-        <i class="material-icons">chevron_right</i>
-      </button>
-    `;
-    containerDiv.appendChild(card);
-  });
-}
+// Vistas de regiones agrupadas: la implementación se encuentra más abajo
 
 function toggleRegion(region) {
   const contentId = `region-${region.replace(/\s+/g, '-')}`;
@@ -503,27 +694,28 @@ function toggleRegion(region) {
 
 
 function showAllStations() {
-  const regionGroups = {};
-  musicData.forEach(station => {
-    const region = station.region || 'Sin región';
-    if (!regionGroups[region]) {
-      regionGroups[region] = [];
-    }
-    regionGroups[region].push(station);
-  });
-  
   while (musicList.firstChild) musicList.removeChild(musicList.firstChild);
-  
-  const backBtn = document.createElement('button');
-  backBtn.className = 'back-to-regions';
-  backBtn.innerHTML = '<i class="material-icons">arrow_back</i> Volver';
-  backBtn.onclick = displayRegionGroups;
-  musicList.appendChild(backBtn);
   
   musicData.forEach(station => {
     const stationDiv = createStationCard(station);
     musicList.appendChild(stationDiv);
   });
+
+  // Cambiar header a estilo region con título "Todas las emisoras"
+  currentRegion = '__all__'; // Marcador especial para "todas"
+  const header = document.getElementById('mainHeader');
+  const regionBackBtn = document.getElementById('regionBackBtn');
+  const headerTitle = document.getElementById('headerTitle');
+  const regionSearchBtn = document.getElementById('regionSearchBtn');
+  const headerSearch = document.getElementById('headerSearch');
+  const darkModeBtn = document.querySelector('.dark-mode-btn');
+
+  if (header) header.classList.add('region-view');
+  if (regionBackBtn) regionBackBtn.style.display = 'inline-flex';
+  if (headerTitle) { headerTitle.style.display = 'inline-block'; headerTitle.textContent = 'Todas'; }
+  if (regionSearchBtn) regionSearchBtn.style.display = 'inline-flex';
+  if (headerSearch) headerSearch.classList.remove('active');
+  if (darkModeBtn) darkModeBtn.style.display = 'none';
 }
 
 function showRegionStations(region) {
@@ -538,17 +730,125 @@ function showRegionStations(region) {
   
   while (musicList.firstChild) musicList.removeChild(musicList.firstChild);
   
-  const backBtn = document.createElement('button');
-  backBtn.className = 'back-to-regions';
-  backBtn.innerHTML = '<i class="material-icons">arrow_back</i> Volver';
-  backBtn.onclick = displayRegionGroups;
-  musicList.appendChild(backBtn);
-  
   // Mostrar emisoras en modo lista (como en "Todas")
   regionGroups[region].forEach(station => {
     const stationDiv = createStationCard(station);
     musicList.appendChild(stationDiv);
   });
+
+  // Cambiar header a estilo region y recordar la región actual
+  currentRegion = region;
+  const header = document.getElementById('mainHeader');
+  const regionBackBtn = document.getElementById('regionBackBtn');
+  const headerTitle = document.getElementById('headerTitle');
+  const regionSearchBtn = document.getElementById('regionSearchBtn');
+  const headerSearch = document.getElementById('headerSearch');
+  const darkModeBtn = document.querySelector('.dark-mode-btn');
+
+  if (header) header.classList.add('region-view');
+  if (regionBackBtn) { regionBackBtn.style.display = 'inline-flex'; }
+  if (headerTitle) { headerTitle.style.display = 'inline-block'; headerTitle.textContent = region; }
+  if (regionSearchBtn) regionSearchBtn.style.display = 'inline-flex';
+  // Mantener el buscador oculto hasta que el usuario pulse la lupa (se controla con la clase 'active')
+  if (headerSearch) headerSearch.classList.remove('active');
+  if (darkModeBtn) darkModeBtn.style.display = 'none';
+}
+
+// Al volver a la vista de regiones, restaurar header
+function displayRegionGroups() {
+  // Restaurar header al estado normal
+  document.getElementById('mainHeader')?.classList.remove('region-view');
+  const backBtn = document.getElementById('regionBackBtn');
+  const title = document.getElementById('headerTitle');
+  const searchBtn = document.getElementById('regionSearchBtn');
+  const search = document.getElementById('headerSearch');
+  const darkBtn = document.querySelector('.dark-mode-btn');
+  const input = document.getElementById('searchInput');
+  
+  if (backBtn) backBtn.style.display = 'none';
+  if (title) title.style.display = 'none';
+  if (searchBtn) searchBtn.style.display = 'none';
+  if (search) search.classList.remove('active');
+  if (darkBtn) darkBtn.style.display = 'flex';
+  if (input) input.value = '';
+  // salir del modo de región
+  currentRegion = null;
+  updateSearchIcon();
+  
+  while (musicList.firstChild) musicList.removeChild(musicList.firstChild);
+
+  // Contenedor para las tarjetas de región
+  const containerDiv = document.createElement('div');
+  containerDiv.className = 'regions-container';
+  musicList.appendChild(containerDiv);
+
+  const regionGroups = {};
+  musicData.forEach(station => {
+    const region = station.region || 'Sin región';
+    if (!regionGroups[region]) {
+      regionGroups[region] = [];
+    }
+    regionGroups[region].push(station);
+  });
+
+  // Agregar "Todas" al inicio
+  const todosCard = document.createElement('div');
+  todosCard.className = 'region-card';
+  todosCard.innerHTML = `
+    <div class="region-card-header">
+      <h3>Todas</h3>
+      <span class="region-card-count">${musicData.length} emisoras</span>
+    </div>
+    <button class="region-card-btn" onclick="showAllStations()">
+      <i class="material-icons">chevron_right</i>
+    </button>
+  `;
+  containerDiv.appendChild(todosCard);
+
+  // Agregar tarjetas por región
+  Object.keys(regionGroups).sort().forEach(region => {
+    const card = document.createElement('div');
+    card.className = 'region-card';
+    card.innerHTML = `
+      <div class="region-card-header">
+        <h3>${region}</h3>
+        <span class="region-card-count">${regionGroups[region].length} emisoras</span>
+      </div>
+      <button class="region-card-btn" onclick="showRegionStations('${region}')">
+        <i class="material-icons">chevron_right</i>
+      </button>
+    `;
+    containerDiv.appendChild(card);
+  });
+}
+
+// Función para volver a la lista de regiones o géneros según la vista actual
+function goBackToList() {
+  if (currentView === 'genres') {
+    displayGenreGroups();
+  } else {
+    displayRegionGroups();
+  }
+}
+
+function focusSearch() {
+  const input = document.getElementById('searchInput');
+  const search = document.getElementById('headerSearch');
+  const searchBtn = document.getElementById('regionSearchBtn');
+  
+  if (search) {
+    const isActive = search.classList.toggle('active');
+    
+    // Ocultar/mostrar la lupa cuando la barra está activa
+    if (searchBtn) {
+      searchBtn.style.display = isActive ? 'none' : 'inline-flex';
+    }
+  }
+  
+  if (input) {
+    // Pequeño delay para que se vea la animación
+    setTimeout(() => input.focus(), 100);
+  }
 }
 
 // ========================================
