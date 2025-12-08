@@ -85,7 +85,7 @@ let musicData = [
    id: 6,
    nombre: "Radio Latina 990 AM La Poderosa",
    region: "Lima",
-   ciudad: "Lima",
+   ciudad: "Miraflores",
    genero: "Variedad",
    pais: "PE",
    src: "https://stm2.srvif.com:7974/stream",
@@ -160,6 +160,106 @@ let musicData = [
    pais: "PE",
    src: "https://stream.live.novotempo.com/radio/smil:rntLimaPE.smil/playlist.m3u8",
    imagen: "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1764382295/Nuevo_Tiempo_gwmdxl.jpg"
+ },
+ {
+   id: 14,
+   nombre: "Radio Unión 103.3 FM",
+   region: "Lima",
+   ciudad: "Miraflores",
+   genero: "Variedad",
+   pais: "PE",
+   src: "https://stream.zeno.fm/5v1hfcfnru1vv",
+   imagen: "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1765132802/Radio_Uni%C3%B3n_-_Lima_rzgyb5.png"
+ },
+ {
+   id: 15,
+   nombre: "Radio Exitosa 98.9 FM",
+   region: "Lambayeque",
+   ciudad: "Chiclayo",
+   genero: "Noticias",
+   pais: "PE",
+   src: "https://stream.radioexitosa.pe/~/chiclayo",
+   imagen: "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1765141653/Radio_Exitosa_-_Chiclayo_rlnecp.png"
+ },
+ {
+   id: 16,
+   nombre: "Radio Inka Sat",
+   region: "San Martín",
+   ciudad: "Soritor",
+   genero: "Variedad",
+   pais: "PE",
+   src: "https://usa16.fastcast4u.com/proxy/talluran/stream",
+   imagen: "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1765142936/Radio_Inka_Sat_-_Soritor_tk46hp.png"
+ },
+ {
+   id: 17,
+   nombre: "Radio San Antonio 96.9 FM",
+   region: "San Martín",
+   ciudad: "Tarapoto",
+   genero: "Variedad",
+   pais: "PE",
+   src: "https://radioconector.com/8026/stream",
+   imagen: "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1765144256/Radio_San_Antonio_-_Tarapoto_cduha4.jpg"
+ },
+ {
+   id: 18,
+   nombre: "Radio RPQ 101.7 FM",
+   region: "San Martín",
+   ciudad: "Moyobamba",
+   genero: "Variedad",
+   pais: "PE",
+   src: "https://stream.zeno.fm/r8lzlbeu3emvv",
+   imagen: "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1765144583/Radio_RPQ_ubeg9f.png"
+ },
+ {
+   id: 19,
+   nombre: "Radio Moyobamba",
+   region: "San Martín",
+   ciudad: "Moyobamba",
+   genero: "Variedad",
+   pais: "PE",
+   src: "https://stream-177.zeno.fm/515sy88k17zuv?zt=eyJhbGciOiJIUzI1NiJ9.eyJzdHJlYW0iOiI1MTVzeTg4azE3enV2IiwiaG9zdCI6InN0cmVhbS0xNzcuemVuby5mbSIsInJ0dGwiOjUsImp0aSI6InoyeDU1UDRCUmJlRW1rZ0YwSnlmdlEiLCJpYXQiOjE3NjUxNDQ5NDYsImV4cCI6MTc2NTE0NTAwNn0.Rkks7A_HTtcFQoRbjG3cU1ElCKYG7V6MPTt0Zp7Wf3g",
+   imagen: "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1765145955/Radio_Moyobamba_rqikig.jpg"
+ },
+ {
+   id: 20,
+   nombre: "Interactiva Radio 92.9 FM",
+   region: "San Martín",
+   ciudad: "Moyobamba",
+   genero: "Variedad",
+   pais: "PE",
+   src: "https://conectperu.com/8390/stream",
+   imagen: "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1765151131/Interactiva_Radio_-_Moyobamba_c0xn9w.png"
+ },
+ {
+   id: 21,
+   nombre: "Interactiva Radio 98.3 FM",
+   region: "San Martín",
+   ciudad: "Tarapoto",
+   genero: "Variedad",
+   pais: "PE",
+   src: "https://conectperu.com/8426/stream",
+   imagen: "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1765150265/Interactiva_Radio_-_Tarapoto_lnqgkd.jpg"
+ },
+ {
+   id: 22,
+   nombre: "Radio Nuevo Tiempo",
+   region: "Puno",
+   ciudad: "Juliaca",
+   genero: "Religioso",
+   pais: "PE",
+   src: "https://stream.live.novotempo.com/radio/smil:rntLimaPE.smil/playlist.m3u8",
+   imagen: "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1764382295/Nuevo_Tiempo_gwmdxl.jpg"
+ },
+ {
+   id: 23,
+   nombre: "Radio Nuevo Tiempo 780 AM",
+   region: "Puno",
+   ciudad: "Juliaca",
+   genero: "Religioso",
+   pais: "PE",
+   src: "https://stream.zeno.fm/yq1mhfpw2bruv",
+   imagen: "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1765154760/Nuevo_Tiempo_-_Juliaca_c3hqqd.jpg"
  },
 ];
 
@@ -1072,8 +1172,6 @@ async function playMusic(id) {
      if (err.name === 'NotAllowedError') {
        console.log('Interacción del usuario requerida para reproducir audio');
        showErrorMessage('Haz clic para reproducir');
-     } else if (err.name === 'NotSupportedError') {
-       showErrorMessage('Formato no soportado');
      } else {
        showErrorMessage('Emisora no Disponible');
      }
@@ -1675,11 +1773,11 @@ function updateExpandedInfo(data) {
   updatePlayerBackground(data.imagen);
 }
 
-// Función para mostrar mensaje de error
+// Función para mostrar mensaje de error (solo en categoría, no reemplaza el nombre)
 function showErrorMessage(message) {
-  nameEl.textContent = message;
-  category.textContent = 'Intenta con otra emisora';
-  category.style.color = 'rgba(255, 255, 255, 0.7)';
+  // Solo mostrar en la categoría, mantener el nombre de la emisora
+  category.textContent = message;
+  category.style.color = 'rgba(255, 100, 100, 0.9)';
 }
 
 // Función para restaurar información normal

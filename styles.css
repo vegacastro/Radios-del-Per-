@@ -2088,7 +2088,7 @@ body.purple .thumbnail {
 .player-menu {
   display: flex;
   gap: 0;
-  padding: 8px 0;
+  padding: 10px 0;
   background: var(--white);
   border-top: 1px solid #e0e0e0;
   justify-content: stretch;
@@ -2105,13 +2105,13 @@ body.purple .thumbnail {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
-  padding: 8px 4px;
+  gap: 4px;
+  padding: 10px 4px;
   border: none;
   border-radius: 0;
   background: transparent;
   color: var(--grey);
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-weight: 500;
   cursor: pointer;
   transition: background 0.2s;
@@ -2130,7 +2130,7 @@ body.purple .thumbnail {
 }
 
 .player-menu .menu-btn .material-icons {
-  font-size: 22px;
+  font-size: 26px;
   color: var(--grey);
 }
 
@@ -2139,7 +2139,7 @@ body.purple .thumbnail {
 }
 
 .player-menu .menu-btn span {
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   color: var(--grey);
 }
 
