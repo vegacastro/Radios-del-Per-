@@ -1,6 +1,9 @@
-const VERSION = 'v1.0.7';
+const VERSION = 'v1.1.0';
 const STATIC_CACHE = `static-${VERSION}`;
 const FONT_CACHE = 'fonts-v1';
+const IMAGE_CACHE = 'images-v1';
+const CDN_CACHE = 'cdn-v1';
+
 const ASSETS = [
   './',
   './index.html',
@@ -9,6 +12,14 @@ const ASSETS = [
   './manifest.json',
   './icons/icon-192.png',
   './icons/icon-512.png'
+];
+
+// CDNs externos a cachear
+const EXTERNAL_CDNS = [
+  'cdn.jsdelivr.net',      // HLS.js
+  'res.cloudinary.com',    // Imágenes de emisoras
+  'fonts.googleapis.com',
+  'fonts.gstatic.com'
 ];
 
 self.addEventListener('install', (e) => {
@@ -35,6 +46,45 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   const req = e.request;
   const url = new URL(req.url);
+
+  // Ignorar requests que no son GET
+  if (req.method !== 'GET') return;
+
+  // Cachear imágenes de Cloudinary (emisoras)
+  if (url.hostname === 'res.cloudinary.com') {
+    e.respondWith(
+      caches.open(IMAGE_CACHE).then((cache) =>
+        cache.match(req).then((cached) => {
+          if (cached) return cached;
+          return fetch(req).then((response) => {
+            if (response.ok) {
+              cache.put(req, response.clone());
+            }
+            return response;
+          }).catch(() => cached);
+        })
+      )
+    );
+    return;
+  }
+
+  // Cachear CDNs externos (HLS.js, etc.)
+  if (url.hostname === 'cdn.jsdelivr.net') {
+    e.respondWith(
+      caches.open(CDN_CACHE).then((cache) =>
+        cache.match(req).then((cached) => {
+          if (cached) return cached;
+          return fetch(req).then((response) => {
+            if (response.ok) {
+              cache.put(req, response.clone());
+            }
+            return response;
+          }).catch(() => cached);
+        })
+      )
+    );
+    return;
+  }
 
   // Cachear fuentes de Google Fonts
   if (url.origin === 'https://fonts.googleapis.com' || url.origin === 'https://fonts.gstatic.com') {
