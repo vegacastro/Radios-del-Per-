@@ -1,4 +1,4 @@
-const VERSION = 'v1.1.0';
+const VERSION = 'v1.1.6';
 const STATIC_CACHE = `static-${VERSION}`;
 const FONT_CACHE = 'fonts-v1';
 const IMAGE_CACHE = 'images-v1';

@@ -185,7 +185,8 @@ button {
   max-width: 720px;
   margin: 0 auto;
   /* dejar espacio a la derecha para los botones del header */
-  padding-right: 50px;
+  --header-actions-space: 50px;
+  padding-right: var(--header-actions-space);
   transition: all 0.3s ease;
 }
 
@@ -232,6 +233,7 @@ button {
   max-width: none;
   margin: 0;
   padding-right: 0;
+  --header-actions-space: 0px;
 }
 
 /* Input de búsqueda en vista de región más compacto */
@@ -274,7 +276,7 @@ button {
 
 .header-search input {
   width: 100%;
-  padding: 10px 44px 10px 16px; /* espacio a la derecha para icono dentro del input */
+  padding: 10px 40px 10px 16px; /* Espacio a la derecha para el botón X */
   border-radius: 24px;
   border: 2px solid #e6e6e6;
   background: #f9f9f9;
@@ -286,33 +288,117 @@ button {
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
-/* Botón pequeño dentro del buscador para volver a la vista de región */
-.header-search .header-search-back {
+/* Ocultar X nativa del input search en todos los navegadores */
+.header-search input[type="search"]::-webkit-search-cancel-button,
+.header-search input[type="search"]::-webkit-search-decoration,
+.header-search input[type="search"]::-webkit-search-results-button,
+.header-search input[type="search"]::-webkit-search-results-decoration,
+.header-search input::-ms-clear,
+.header-search input::-ms-reveal {
+  display: none;
+  -webkit-appearance: none;
+}
+
+/* Botón de limpiar búsqueda (X) al lado derecho */
+.header-search .header-search-clear {
   position: absolute;
-  left: 8px;
+  /* En escritorio, .header-buttons se superpone a la derecha (z-index:50).
+     Movemos el X hacia la izquierda usando el mismo espacio reservado del contenedor. */
+  right: calc(6px + var(--header-actions-space, 0px));
   top: 50%;
   transform: translateY(-50%);
-  width: 36px;
-  height: 36px;
-  display: none;
+  width: 28px;
+  height: 28px;
+  display: none; /* Oculto por defecto, se muestra con JS */
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: transparent;
+  background: rgba(0, 0, 0, 0.08);
   border: none;
-  color: var(--grey);
+  color: #666;
   cursor: pointer;
-  z-index: 2;
+  /* Por encima de .header-buttons (z-index: 50) para que nunca “desaparezca” */
+  z-index: 60;
+  pointer-events: auto;
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+  padding: 0;
 }
 
-/* Al activar la búsqueda (desplegada) mostrar el botón volver y ajustar padding del input */
-.header-search.active .header-search-back {
-  display: inline-flex;
+/* Cuando tiene la clase visible, mostrar el botón - regla global con máxima especificidad */
+.header-search-clear.visible,
+.header-search .header-search-clear.visible,
+.header.region-view .header-search .header-search-clear.visible,
+.header.region-view .header-search.active .header-search-clear.visible,
+body.dark .header-search-clear.visible,
+body.blue .header-search-clear.visible,
+body.green .header-search-clear.visible,
+body.purple .header-search-clear.visible,
+body.dark .header-search .header-search-clear.visible,
+body.blue .header-search .header-search-clear.visible,
+body.green .header-search .header-search-clear.visible,
+body.purple .header-search .header-search-clear.visible {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
-.header-search.active input {
-  padding-left: 44px; /* dejar espacio para el botón volver */
+/* Forzar visibilidad del botón X en TODOS los temas oscuros */
+body.dark .header-search-clear.visible,
+body.blue .header-search-clear.visible,
+body.green .header-search-clear.visible,
+body.purple .header-search-clear.visible {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  background: rgba(255, 255, 255, 0.25) !important;
+  color: #fff !important;
 }
+
+body.dark .header-search-clear.visible .material-icons,
+body.blue .header-search-clear.visible .material-icons,
+body.green .header-search-clear.visible .material-icons,
+body.purple .header-search-clear.visible .material-icons {
+  color: #fff !important;
+}
+
+.header-search .header-search-clear .material-icons {
+  font-size: 18px;
+  color: inherit;
+}
+
+.header-search .header-search-clear:hover {
+  background: rgba(0, 0, 0, 0.15);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.header-search .header-search-clear:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* Estilos del botón limpiar para temas oscuros */
+body.dark .header-search .header-search-clear,
+body.blue .header-search .header-search-clear,
+body.green .header-search .header-search-clear,
+body.purple .header-search .header-search-clear {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+body.dark .header-search .header-search-clear .material-icons,
+body.blue .header-search .header-search-clear .material-icons,
+body.green .header-search .header-search-clear .material-icons,
+body.purple .header-search .header-search-clear .material-icons {
+  color: #fff;
+}
+
+body.dark .header-search .header-search-clear:hover,
+body.blue .header-search .header-search-clear:hover,
+body.green .header-search .header-search-clear:hover,
+body.purple .header-search .header-search-clear:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* Ya no usamos .header-search.active, el padding se controla con JS */
 
 .header-search input::placeholder {
   color: #999;
@@ -325,7 +411,9 @@ button {
   box-shadow: 0 2px 8px rgba(243, 52, 73, 0.1);
 }
 
-.header-search .material-icons {
+/* Ocultar icono de lupa/X (solo el icono directo, no el del botón) */
+.header-search > .material-icons {
+  display: none;
   position: absolute;
   right: 8px;
   font-size: 20px;
@@ -334,7 +422,6 @@ button {
   cursor: default;
   width: 32px;
   height: 32px;
-  display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
@@ -344,37 +431,37 @@ button {
   z-index: 1;
 }
 
-.header-search .material-icons.clickable {
+.header-search > .material-icons.clickable {
   cursor: pointer;
   background: rgba(0,0,0,0.08);
   color: #333;
 }
 
 /* Estilos para que el icono luzca correctamente en temas oscuros */
-body.dark .header-search .material-icons,
-body.blue .header-search .material-icons,
-body.green .header-search .material-icons,
-body.purple .header-search .material-icons {
+body.dark .header-search > .material-icons,
+body.blue .header-search > .material-icons,
+body.green .header-search > .material-icons,
+body.purple .header-search > .material-icons {
   color: rgba(255,255,255,0.6);
 }
 
-body.dark .header-search .material-icons.clickable,
-body.blue .header-search .material-icons.clickable,
-body.green .header-search .material-icons.clickable,
-body.purple .header-search .material-icons.clickable {
+body.dark .header-search > .material-icons.clickable,
+body.blue .header-search > .material-icons.clickable,
+body.green .header-search > .material-icons.clickable,
+body.purple .header-search > .material-icons.clickable {
   color: rgba(255,255,255,0.95);
   background: rgba(255,255,255,0.12);
 }
 
-.header-search .material-icons.clickable:hover {
+.header-search > .material-icons.clickable:hover {
   transform: translateY(-50%) scale(1.1);
   background: rgba(0,0,0,0.12);
 }
 
-body.dark .header-search .material-icons.clickable:hover,
-body.blue .header-search .material-icons.clickable:hover,
-body.green .header-search .material-icons.clickable:hover,
-body.purple .header-search .material-icons.clickable:hover {
+body.dark .header-search > .material-icons.clickable:hover,
+body.blue .header-search > .material-icons.clickable:hover,
+body.green .header-search > .material-icons.clickable:hover,
+body.purple .header-search > .material-icons.clickable:hover {
   background: rgba(255,255,255,0.18);
 }
 
@@ -447,10 +534,10 @@ body.purple .header-search input:focus {
   border-color: rgba(255, 255, 255, 0.5);
 }
 
-body.dark .header-search .material-icons,
-body.blue .header-search .material-icons,
-body.green .header-search .material-icons,
-body.purple .header-search .material-icons {
+body.dark .header-search > .material-icons,
+body.blue .header-search > .material-icons,
+body.green .header-search > .material-icons,
+body.purple .header-search > .material-icons {
   color: rgba(255, 255, 255, 0.6);
 }
 
@@ -471,55 +558,107 @@ body.purple .header-search .material-icons {
 
 @media (max-width: 420px) {
   .header {
-    padding: 10px 8px;
-    justify-content: center;
-    gap: 8px;
+    padding: 8px 6px;
+    justify-content: space-between;
+    gap: 6px;
   }
   .header-buttons {
-    position: absolute;
-    right: 8px;
-    top: 50%;
-    transform: translateY(-50%);
+    position: static;
+    transform: none;
+    flex-shrink: 0;
+  }
+  .header-buttons .dark-mode-btn {
+    width: 38px;
+    height: 38px;
   }
   .header-search {
-    /* expandir la barra de búsqueda al máximo en móviles */
-    width: calc(100% - 50px);
-    max-width: none;
-    padding-right: 0;
-    margin: 0;
-    flex: 1 1 auto;
+    /* expandir la barra de búsqueda en móviles */
+    flex: 1 1 auto !important;
+    width: auto !important;
+    max-width: none !important;
+    padding-right: 0 !important;
+    --header-actions-space: 0px;
+    margin: 0 !important;
   }
   .header-search input {
-    padding: 10px 44px 10px 16px;
-    border-radius: 20px;
+    padding: 12px 40px 12px 16px !important; /* Espacio a la derecha para el botón X */
+    border-radius: 24px;
+    font-size: 15px;
+    width: 100% !important;
+  }
+  .header-search input::placeholder {
+    font-size: 14px;
   }
   
   /* Vista de región en pantallas muy pequeñas */
   .header.region-view {
     flex-wrap: nowrap;
     justify-content: flex-start;
-    padding: 8px;
+    padding: 8px 6px;
+  }
+  
+  .header.region-view .region-back-btn {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    margin-right: 2px;
   }
   
   .header.region-view .header-buttons {
-    position: relative;
-    right: auto;
-    top: auto;
-    transform: none;
+    display: flex;
+    position: static;
     margin-left: auto;
+    gap: 0;
   }
   
   .header.region-view .header-title {
     font-size: 0.85rem;
+    max-width: 90px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
   .header.region-view .header-search.active {
-    min-width: 60px;
+    min-width: 120px !important;
+    flex: 1 !important;
   }
   
   .header.region-view .header-search.active input {
-    padding: 6px 8px 6px 28px;
-    font-size: 0.75rem;
+    padding: 10px 40px 10px 12px !important; /* Espacio para botón X */
+    font-size: 14px;
+    border-radius: 20px;
+  }
+}
+
+/* Pantallas móviles medianas (421px - 480px) */
+@media (min-width: 421px) and (max-width: 480px) {
+  .header {
+    padding: 10px 8px;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .header-buttons {
+    position: static;
+    transform: none;
+    flex-shrink: 0;
+  }
+  .header-search {
+    flex: 1 1 auto !important;
+    width: auto !important;
+    max-width: none !important;
+    padding-right: 0 !important;
+    --header-actions-space: 0px;
+    margin: 0 !important;
+  }
+  .header-search input {
+    padding: 11px 40px 11px 16px; /* Espacio para botón X */
+    border-radius: 22px;
+    font-size: 15px;
+    width: 100%;
+  }
+  .header.region-view .header-search.active input {
+    padding: 10px 40px 10px 14px; /* Espacio para botón X */
+    font-size: 14px;
   }
 }
 
@@ -1238,6 +1377,23 @@ body.purple .region-header .station-count {
   background: #1a1a1a;
 }
 
+/* Ocultar el botón X de limpiar búsqueda cuando el reproductor está expandido */
+.sec:has(.players.active) .header-search-clear,
+.sec:has(.players.active) .header-search-clear.visible,
+body.dark .sec:has(.players.active) .header-search-clear,
+body.dark .sec:has(.players.active) .header-search-clear.visible,
+body.blue .sec:has(.players.active) .header-search-clear,
+body.blue .sec:has(.players.active) .header-search-clear.visible,
+body.green .sec:has(.players.active) .header-search-clear,
+body.green .sec:has(.players.active) .header-search-clear.visible,
+body.purple .sec:has(.players.active) .header-search-clear,
+body.purple .sec:has(.players.active) .header-search-clear.visible {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 .players.active .player-bg-blur {
   opacity: 1;
 }
@@ -1413,6 +1569,8 @@ body.purple .region-header .station-count {
   gap: 5px;
   cursor: pointer;
   transition: opacity 0.2s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .content:hover {
@@ -1431,6 +1589,8 @@ body.purple .region-header .station-count {
   color: #ffffff;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
   letter-spacing: 0.3px;
+  position: relative;
+  z-index: 1;
 }
 
 .content small {
@@ -1439,6 +1599,8 @@ body.purple .region-header .station-count {
   white-space: nowrap;
   text-overflow: ellipsis;
   color: rgba(255, 255, 255, 0.75);
+  position: relative;
+  z-index: 1;
   display: block;
   line-height: 1.4;
   font-weight: 500;
@@ -1520,6 +1682,29 @@ body.purple .content small {
   color: rgba(255, 255, 255, 0.95);
 }
 
+/* Botones secundarios (compartir y favoritos) */
+.control-secondary-btn {
+  width: clamp(42px, 10vw, 50px);
+  height: clamp(42px, 10vw, 50px);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.control-secondary-btn .material-icons {
+  font-size: clamp(22px, 5.5vw, 26px);
+}
+
+/* Botón de favoritos activo */
+.favorite-expanded-btn.active {
+  background: rgba(243, 52, 73, 0.25);
+  border-color: rgba(243, 52, 73, 0.5);
+}
+
+.favorite-expanded-btn.active .material-icons {
+  color: var(--primary);
+  text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+}
+
 /* Botón de play/pause con anillos animados */
 .play-btn-circle {
   position: relative;
@@ -1535,7 +1720,6 @@ body.purple .content small {
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-  z-index: 3;
 }
 
 .play-btn-circle:hover {
@@ -1645,6 +1829,106 @@ body.purple .content small {
 
 /* Botón de expandir oculto en reproductor minimizado */
 .expand-btn {
+  display: none !important;
+}
+
+/* ========================================
+   ANIMACIÓN DE BARRAS DE AUDIO - REPRODUCTOR MINIMIZADO
+   ======================================== */
+.mini-player-equalizer {
+  position: absolute;
+  bottom: 0;
+  left: auto;
+  right: 5px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 3px;
+  height: 100%;
+  width: auto;
+  padding: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* Solo mostrar cuando está reproduciendo */
+.players:not(.active) .mini-player-equalizer.playing {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.mini-player-equalizer span {
+  width: 3px;
+  min-height: 2px;
+  border-radius: 3px;
+  background: linear-gradient(to top, 
+    rgba(255, 255, 255, 0.4) 0%, 
+    rgba(255, 255, 255, 0.8) 50%, 
+    rgba(255, 255, 255, 1) 100%
+  );
+  animation: miniEqualizerBounce 0.6s ease-in-out infinite;
+  flex-shrink: 0;
+  transform-origin: bottom;
+}
+
+/* Animación con diferentes delays para efecto orgánico */
+.mini-player-equalizer span:nth-child(1) { animation-delay: -0.5s; }
+.mini-player-equalizer span:nth-child(2) { animation-delay: -0.3s; }
+.mini-player-equalizer span:nth-child(3) { animation-delay: -0.1s; }
+.mini-player-equalizer span:nth-child(4) { animation-delay: -0.4s; }
+.mini-player-equalizer span:nth-child(5) { animation-delay: -0.2s; }
+.mini-player-equalizer span:nth-child(6) { animation-delay: -0.35s; }
+.mini-player-equalizer span:nth-child(7) { animation-delay: -0.15s; }
+.mini-player-equalizer span:nth-child(8) { animation-delay: -0.45s; }
+
+@keyframes miniEqualizerBounce {
+  0%, 100% {
+    height: 4px;
+    opacity: 0.5;
+  }
+  50% {
+    height: 22px;
+    opacity: 1;
+  }
+}
+
+/* Ocultar completamente cuando está pausado */
+.mini-player-equalizer.paused {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(10px) !important;
+}
+
+/* Ocultar en reproductor expandido */
+.players.active .mini-player-equalizer {
+  display: none !important;
+}
+
+/* Animación de "pulso" cuando se activa */
+@keyframes favoritePulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.mini-favorite-btn.pulse .material-icons {
+  animation: favoritePulse 0.4s ease-out;
+}
+
+/* Ocultar en reproductor expandido */
+.players.active .mini-favorite-btn {
   display: none !important;
 }
 
@@ -2497,7 +2781,7 @@ body.purple .music.active:hover {
     padding: 5px 26px 5px 8px;
   }
   
-  .header-search .material-icons {
+  .header-search > .material-icons {
     font-size: 16px;
     right: 6px;
   }
@@ -2527,18 +2811,18 @@ body.purple .music.active:hover {
   }
   
   .header.region-view .header-search.active input {
-    padding: 6px 10px 6px 32px;
+    padding: 6px 32px 6px 10px;
     font-size: 0.8rem;
   }
   
-  .header.region-view .header-search.active .header-search-back {
-    width: 28px;
-    height: 28px;
-    left: 4px;
+  .header.region-view .header-search.active .header-search-clear {
+    width: 24px;
+    height: 24px;
+    right: 4px;
   }
   
-  .header.region-view .header-search.active .header-search-back .material-icons {
-    font-size: 18px;
+  .header.region-view .header-search.active .header-search-clear .material-icons {
+    font-size: 16px;
   }
   
   .header.region-view .header-search-btn {
@@ -2744,4 +3028,98 @@ body.green .player-region,
 body.purple .player-region {
   color: #FF6B9D;
   background: rgba(255, 107, 157, 0.2);
+}
+
+/* =====================================================
+   REGLAS FINALES FORZADAS - BOTÓN LIMPIAR BÚSQUEDA (X)
+   Estas reglas van al final para máxima prioridad
+   ===================================================== */
+
+/* Botón X visible - tema CLARO */
+#searchClearBtn.visible {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: absolute !important;
+  z-index: 9999 !important;
+  background: rgba(0, 0, 0, 0.12) !important;
+  color: #333 !important;
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 50% !important;
+  border: none !important;
+  cursor: pointer !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+#searchClearBtn.visible .material-icons {
+  color: #333 !important;
+  font-size: 18px !important;
+  display: inline !important;
+}
+
+/* Botón X visible - TEMAS OSCUROS */
+body.dark #searchClearBtn.visible,
+body.blue #searchClearBtn.visible,
+body.green #searchClearBtn.visible,
+body.purple #searchClearBtn.visible {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  background: rgba(255, 255, 255, 0.35) !important;
+  color: #fff !important;
+}
+
+body.dark #searchClearBtn.visible .material-icons,
+body.blue #searchClearBtn.visible .material-icons,
+body.green #searchClearBtn.visible .material-icons,
+body.purple #searchClearBtn.visible .material-icons {
+  color: #fff !important;
+  display: inline !important;
+}
+
+/* Hover en temas oscuros */
+body.dark #searchClearBtn.visible:hover,
+body.blue #searchClearBtn.visible:hover,
+body.green #searchClearBtn.visible:hover,
+body.purple #searchClearBtn.visible:hover {
+  background: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* =====================================================
+   FIX FINAL: Posición correcta del botón X en DESKTOP
+   El botón debe estar DENTRO del input, no superpuesto
+   con el cambiador de temas
+   ===================================================== */
+
+/* En desktop: posicionar el X a la izquierda del espacio reservado para header-buttons */
+@media (min-width: 481px) {
+  #searchClearBtn.header-search-clear {
+    right: calc(var(--header-actions-space, 50px) + 10px) !important;
+  }
+}
+
+/* En móvil: el X va pegado al borde derecho del input */
+@media (max-width: 480px) {
+  #searchClearBtn.header-search-clear {
+    right: 10px !important;
+  }
+}
+
+/* Ocultar botón de limpiar búsqueda cuando el reproductor está expandido */
+.players.active ~ .header .header-search-clear,
+.players.active ~ .header-search .header-search-clear,
+.players.active ~ .header-search-clear,
+.players.active ~ #mainHeader .header-search-clear,
+.players.active ~ #headerSearch .header-search-clear {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Fallback para estructura directa */
+.players.active ~ .header-search-clear,
+.players.active ~ .header .header-search-clear {
+  display: none !important;
+  visibility: hidden !important;
 }

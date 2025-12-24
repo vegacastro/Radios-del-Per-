@@ -91,23 +91,21 @@
         </h3>
 
         <div class="header-search" id="headerSearch">
-          <button
-            id="searchBackBtn"
-            class="header-search-back"
-            type="button"
-            title="Volver a región"
-            aria-label="Volver a región"
-            style="display: none"
-          >
-            <i class="material-icons">arrow_back</i>
-          </button>
           <input
             id="searchInput"
-            type="search"
-            placeholder="Buscar emisora o podcast"
+            type="text"
+            placeholder="Buscar emisoras"
             aria-label="Buscar estación"
           />
-          <i class="material-icons">search</i>
+          <button
+            id="searchClearBtn"
+            class="header-search-clear"
+            type="button"
+            title="Limpiar búsqueda"
+            aria-label="Limpiar búsqueda"
+          >
+            <i class="material-icons">close</i>
+          </button>
         </div>
 
         <div class="header-buttons">
@@ -138,7 +136,7 @@
       <div class="music-list" id="music-list"></div>
 
       <!-- Audio player -->
-      <audio id="audio" preload="none" crossorigin="anonymous"></audio>
+      <audio id="audio" preload="none"></audio>
 
       <!-- Reproductor -->
       <div class="players" id="players">
@@ -174,6 +172,17 @@
           </div>
 
           <div class="content" onclick="showplayer()">
+            <!-- Animación de ritmo de audio como fondo -->
+            <div class="mini-player-equalizer" id="miniPlayerEqualizer">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
             <h3 id="name">Selecciona una radio</h3>
             <small id="category">Categoría</small>
           </div>
@@ -206,6 +215,17 @@
             id="playerControlsExpanded"
             style="display: none"
           >
+            <!-- Botón de compartir (izquierda) -->
+            <button
+              type="button"
+              class="control-icon-btn control-secondary-btn"
+              id="shareBtn"
+              onclick="shareApp()"
+              aria-label="Compartir"
+            >
+              <i class="material-icons">share</i>
+            </button>
+
             <button
               type="button"
               class="control-icon-btn"
@@ -233,6 +253,17 @@
               aria-label="Siguiente"
             >
               <i class="material-icons">skip_next</i>
+            </button>
+
+            <!-- Botón de favoritos (derecha) -->
+            <button
+              type="button"
+              class="control-icon-btn control-secondary-btn favorite-expanded-btn"
+              id="favoriteExpandedBtn"
+              onclick="toggleCurrentFavorite(event)"
+              aria-label="Agregar a favoritos"
+            >
+              <i class="material-icons">favorite_border</i>
             </button>
           </div>
 

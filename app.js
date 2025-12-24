@@ -59,7 +59,7 @@ let musicData = [
     nombre: "Ritmo Romántica 93.1 FM",
     region: "Lima",
     ciudad: "Lima",
-    genero: "Romántico",
+    genero: "Baladas",
     pais: "PE",
     src: "https://us-b4-p-e-cg11-audio.cdn.mdstrm.com/live-audio-aw/6839e2376607bdf6b2fcde27",
     imagen:
@@ -81,7 +81,7 @@ let musicData = [
     nombre: "Radio Corazón",
     region: "Lima",
     ciudad: "Lima",
-    genero: "Romántico",
+    genero: "Baladas",
     pais: "PE",
     src: "https://mdstrm.com/audio/5fada514fc16c006bd63370f/icecast.audio",
     imagen:
@@ -92,7 +92,7 @@ let musicData = [
     nombre: "Radio Ritmo y Romance",
     region: "Lima",
     ciudad: "Lima",
-    genero: "Romántico",
+    genero: "Baladas",
     pais: "PE",
     src: "https://stream.zeno.fm/7glwqektfbjvv",
     imagen:
@@ -176,12 +176,12 @@ let musicData = [
   },
   {
     id: 13,
-    nombre: "Radio Nuevo Tiempo",
-    region: "Puno",
-    ciudad: "Juliaca",
+    nombre: "Nuevo Tiempo 1380 AM",
+    region: "Lima",
+    ciudad: "Chaclacayo",
     genero: "Religioso",
     pais: "PE",
-    src: "https://stream.live.novotempo.com/radio/smil:rntLimaPE.smil/playlist.m3u8",
+    src: "https://stream.live.novotempo.com/radio/smil:rntLimaPE.smil/chunklist_b128000_slspa.m3u8",
     imagen:
       "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1764382295/Nuevo_Tiempo_gwmdxl.jpg",
   },
@@ -275,18 +275,18 @@ let musicData = [
   },
   {
     id: 22,
-    nombre: "Radio Nuevo Tiempo",
-    region: "Puno",
-    ciudad: "Juliaca",
+    nombre: "Nuevo Tiempo 94.6 FM",
+    region: "La Paz",
+    ciudad: "La Paz",
     genero: "Religioso",
-    pais: "PE",
-    src: "https://stream.live.novotempo.com/radio/smil:rntLimaPE.smil/playlist.m3u8",
+    pais: "BOL",
+    src: "https://stream.live.novotempo.com/radio/smil:rntCochabambaBO.smil/chunklist_b64000_slspa.m3u8",
     imagen:
       "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1764382295/Nuevo_Tiempo_gwmdxl.jpg",
   },
   {
     id: 23,
-    nombre: "Radio Nuevo Tiempo 780 AM",
+    nombre: "Nuevo Tiempo 780 AM",
     region: "Puno",
     ciudad: "Juliaca",
     genero: "Religioso",
@@ -294,6 +294,94 @@ let musicData = [
     src: "https://stream.zeno.fm/yq1mhfpw2bruv",
     imagen:
       "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1765154760/Nuevo_Tiempo_-_Juliaca_c3hqqd.jpg",
+  },
+  {
+    id: 24,
+    nombre: "Nuevo Tiempo 92.9 FM",
+    region: "Argentina",
+    ciudad: "Buenos Aires",
+    genero: "Religioso",
+    pais: "AR",
+    src: "https://stream.live.novotempo.com/radio/smil:rntBuenosAiresAR.smil/chunklist_b128000_slspa.m3u8",
+    imagen:
+      "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1765154760/Nuevo_Tiempo_-_Juliaca_c3hqqd.jpg",
+  },
+  {
+    id: 25,
+    nombre: "Nuevo Tiempo 106.9 FM",
+    region: "Chile",
+    ciudad: "Chillán",
+    genero: "Religioso",
+    pais: "CL",
+    src: "https://stream.live.novotempo.com/radio/smil:rntChillanCL.smil/chunklist_b64000_slspa.m3u8",
+    imagen:
+      "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1765154760/Nuevo_Tiempo_-_Juliaca_c3hqqd.jpg",
+  },
+  {
+    id: 26,
+    nombre: "Nuevo Tiempo 92.1 FM",
+    region: "Ecuador",
+    ciudad: "Quito",
+    genero: "Religioso",
+    pais: "EC",
+    src: "https://stream.live.novotempo.com/radio/smil:rntQuitoEC.smil/chunklist_b64000_slspa.m3u8",
+    imagen:
+      "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1765154760/Nuevo_Tiempo_-_Juliaca_c3hqqd.jpg",
+  },
+  {
+    id: 27,
+    nombre: "Nuevo Tiempo 97.9 FM",
+    region: "Paraguay",
+    ciudad: "Asunción",
+    genero: "Religioso",
+    pais: "PY",
+    src: "https://stream.live.novotempo.com/radio/smil:rntAsuncionPY.smil/chunklist_b64000_slspa.m3u8",
+    imagen:
+      "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1765154760/Nuevo_Tiempo_-_Juliaca_c3hqqd.jpg",
+  },
+  {
+    id: 28,
+    nombre: "Nuevo Tiempo 101.3 FM",
+    region: "Uruguay",
+    ciudad: "Montevideo",
+    genero: "Religioso",
+    pais: "UY",
+    src: "https://stream.live.novotempo.com/radio/smil:rntMontevideoUY.smil/chunklist_b64000_slspa.m3u8",
+    imagen:
+      "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1765154760/Nuevo_Tiempo_-_Juliaca_c3hqqd.jpg",
+  },
+  {
+    id: 29,
+    nombre: "Nuevo Tiempo 101.3 FM",
+    region: "Brasil",
+    ciudad: "Jacareí - Sao Paulo",
+    genero: "Religioso",
+    pais: "BR",
+    src: "https://stream.live.novotempo.com/radio/smil:radionuevotiempo.smil/chunklist_b96000_slesp.m3u8",
+    imagen:
+      "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1765154760/Nuevo_Tiempo_-_Juliaca_c3hqqd.jpg",
+  },
+  {
+    id: 30,
+    nombre: "Radio Planice 91.5FM",
+    region: "Lima",
+    ciudad: "San Juan de Lurigancho",
+    genero: "Variedad",
+    pais: "PE",
+    src: "https://panel.innovatestream.pe:10842/stream",
+    imagen:
+      "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1766345402/Radio_Planicie_-_Lima_hv4pul.png",
+  },
+  {
+    id: 31,
+    nombre: "Radio Exitosa 95.5 FM",
+    region: "Lima",
+    ciudad: "Chorrillos",
+    genero: "Noticias",
+    pais: "PE",
+    src: "https://neptuno-2-audio.mediaserver.digital/79525baf-b0f5-4013-a8bd-3c5c293c6561",
+    imagen:
+      "https://res.cloudinary.com/dxlkf8i1p/image/upload/v1765141653/Radio_Exitosa_-_Chiclayo_rlnecp.png",
   },
 ];
 
@@ -308,6 +396,34 @@ let showingFavorites = false;
 let currentView = "home";
 // Región actualmente abierta (null cuando no se está dentro de una región)
 let currentRegion = null;
+// País actualmente abierto para World (null cuando no se está dentro de un país)
+let currentCountry = null;
+
+// Mapa de códigos de país a nombres
+const countryNames = {
+  "PE": "Perú",
+  "AR": "Argentina",
+  "BO": "Bolivia",
+  "BOL": "Bolivia",
+  "BR": "Brasil",
+  "CL": "Chile",
+  "CO": "Colombia",
+  "EC": "Ecuador",
+  "MX": "México",
+  "PY": "Paraguay",
+  "UY": "Uruguay",
+  "VE": "Venezuela",
+  "ES": "España",
+  "US": "Estados Unidos",
+  "GB": "Reino Unido",
+  "FR": "Francia",
+  "DE": "Alemania",
+  "IT": "Italia",
+  "PT": "Portugal",
+  "JP": "Japón",
+  "KR": "Corea del Sur",
+  "CN": "China",
+};
 
 // ========================================
 // 4. SISTEMA DE FAVORITOS
@@ -405,11 +521,13 @@ function applyFilters() {
       }
     } else {
       // Si hay búsqueda, mostrar las emisoras que coincidan.
+      // Filtrar solo emisoras peruanas para Locales
+      const localStations = musicData.filter(station => station.pais === "PE");
       // Si estamos dentro de una región (y no es "todas"), limitar la búsqueda a esa región.
       const baseList =
         currentRegion && currentRegion !== "__all__"
-          ? musicData.filter((m) => (m.region || "") === currentRegion)
-          : musicData;
+          ? localStations.filter((m) => (m.region || "") === currentRegion)
+          : localStations;
       const filtered = baseList.filter((m) => {
         return (
           (m.nombre && m.nombre.toLowerCase().includes(q)) ||
@@ -482,23 +600,101 @@ function applyFilters() {
         });
       }
     }
+  } else if (currentView === "world") {
+    // Vista World con búsqueda
+    const worldStations = musicData.filter(station => station.pais !== "PE");
+    
+    if (q === "") {
+      // Si el buscador está vacío, mostrar los países o la lista del país actual
+      if (currentCountry === "__all__") {
+        showAllWorldStations();
+      } else if (currentCountry) {
+        showCountryStations(currentCountry);
+      } else {
+        displayCountryGroups();
+      }
+    } else {
+      // Si hay búsqueda, mostrar las emisoras que coincidan
+      const baseList =
+        currentCountry && currentCountry !== "__all__"
+          ? worldStations.filter((m) => {
+              const countryName = countryNames[m.pais] || m.pais;
+              return countryName === currentCountry;
+            })
+          : worldStations;
+      const filtered = baseList.filter((m) => {
+        return (
+          (m.nombre && m.nombre.toLowerCase().includes(q)) ||
+          (m.ciudad && m.ciudad.toLowerCase().includes(q)) ||
+          (m.genero && m.genero.toLowerCase().includes(q))
+        );
+      });
+
+      while (musicList.firstChild) musicList.removeChild(musicList.firstChild);
+
+      if (filtered.length === 0) {
+        const emptyMsg = document.createElement("div");
+        emptyMsg.style.cssText =
+          "padding: 40px 20px; text-align: center; color: var(--grey);";
+        emptyMsg.innerHTML = `
+          <i class="material-icons" style="font-size: 64px; opacity: 0.3;">search_off</i>
+          <p style="margin-top: 10px; font-size: 16px;">No se encontraron emisoras</p>
+          <p style="font-size: 14px; opacity: 0.7;">Intenta con otro nombre o país</p>
+        `;
+        musicList.appendChild(emptyMsg);
+      } else {
+        filtered.forEach((station) => {
+          const stationDiv = createStationCard(station);
+          musicList.appendChild(stationDiv);
+        });
+      }
+    }
   }
 }
 
-// Mejor comportamiento: actualiza icono y aplica filtros
-const headerSearchIcon = document.querySelector(
-  ".header-search .material-icons"
-);
-
+// Actualiza el estado del botón de limpiar búsqueda
 function updateSearchIcon() {
-  if (!headerSearchIcon) return;
   const hasValue = (searchInput.value || "").toString().trim().length > 0;
-  if (hasValue) {
-    headerSearchIcon.textContent = "close";
-    headerSearchIcon.classList.add("clickable");
-  } else {
-    headerSearchIcon.textContent = "search";
-    headerSearchIcon.classList.remove("clickable");
+  const searchClearBtn = document.getElementById("searchClearBtn");
+  
+  // Mostrar/ocultar botón de limpiar según si hay texto
+  if (searchClearBtn) {
+    // Detectar si estamos en tema oscuro
+    const isDark = document.body.classList.contains('dark') || 
+                   document.body.classList.contains('blue') || 
+                   document.body.classList.contains('green') || 
+                   document.body.classList.contains('purple');
+    
+    if (hasValue) {
+      searchClearBtn.classList.add("visible");
+      // Forzar estilos inline con setProperty para máxima prioridad
+      searchClearBtn.style.setProperty('display', 'inline-flex', 'important');
+      searchClearBtn.style.setProperty('visibility', 'visible', 'important');
+      searchClearBtn.style.setProperty('opacity', '1', 'important');
+      
+      // Colores más visibles según el tema
+      if (isDark) {
+        // Tema oscuro: fondo blanco sólido, icono rojo oscuro
+        searchClearBtn.style.setProperty('background', '#ffffff', 'important');
+        searchClearBtn.style.setProperty('color', '#d32f2f', 'important');
+        searchClearBtn.style.setProperty('box-shadow', '0 2px 4px rgba(0,0,0,0.3)', 'important');
+      } else {
+        // Tema claro: fondo gris, icono oscuro
+        searchClearBtn.style.setProperty('background', 'rgba(0, 0, 0, 0.15)', 'important');
+        searchClearBtn.style.setProperty('color', '#333', 'important');
+        searchClearBtn.style.setProperty('box-shadow', 'none', 'important');
+      }
+      
+      // También actualizar el icono
+      const icon = searchClearBtn.querySelector('.material-icons');
+      if (icon) {
+        icon.style.setProperty('color', isDark ? '#d32f2f' : '#333', 'important');
+        icon.style.setProperty('display', 'inline', 'important');
+      }
+    } else {
+      searchClearBtn.classList.remove("visible");
+      searchClearBtn.style.setProperty('display', 'none', 'important');
+    }
   }
 }
 
@@ -507,60 +703,19 @@ searchInput.addEventListener("input", (e) => {
   applyFilters();
 });
 
-if (headerSearchIcon) {
-  headerSearchIcon.addEventListener("click", (e) => {
-    if (headerSearchIcon.classList.contains("clickable")) {
-      searchInput.value = "";
-      updateSearchIcon();
-      applyFilters();
-      searchInput.focus();
-    } else {
-      // opcional: enfocar campo de búsqueda
-      searchInput.focus();
-    }
-  });
-}
-
 // inicializar estado del icono
 updateSearchIcon();
 
-// Botón interno del buscador para volver a la lista de la región/género actual
-const searchBackBtn = document.getElementById("searchBackBtn");
-if (searchBackBtn) {
-  searchBackBtn.addEventListener("click", (e) => {
+// Botón de limpiar búsqueda
+const searchClearBtnElement = document.getElementById("searchClearBtn");
+if (searchClearBtnElement) {
+  searchClearBtnElement.addEventListener("click", (e) => {
     e.stopPropagation();
     // limpiar búsqueda
     searchInput.value = "";
     updateSearchIcon();
     applyFilters();
-    // cerrar buscador
-    const headerSearch = document.getElementById("headerSearch");
-    const searchBtn = document.getElementById("regionSearchBtn");
-
-    if (headerSearch) headerSearch.classList.remove("active");
-
-    // Restaurar visibilidad de lupa
-    if (searchBtn) searchBtn.style.display = "inline-flex";
-
-    // Según la vista actual, volver a la lista correspondiente
-    if (currentView === "genres") {
-      if (currentGenre === "__all__") {
-        showAllGenreStations();
-      } else if (currentGenre) {
-        showGenreStations(currentGenre);
-      } else {
-        displayGenreGroups();
-      }
-    } else {
-      // Vista locales
-      if (currentRegion === "__all__") {
-        showAllStations();
-      } else if (currentRegion) {
-        showRegionStations(currentRegion);
-      } else {
-        displayRegionGroups();
-      }
-    }
+    searchInput.focus();
   });
 }
 
@@ -617,18 +772,161 @@ function showWorld() {
     showingFavorites = false;
   }
 
+  searchInput.value = "";
+  displayCountryGroups();
+}
+
+// Mostrar tarjetas de países (World)
+function displayCountryGroups() {
+  // Restaurar header al estado normal
+  document.getElementById("mainHeader")?.classList.remove("region-view");
+  const backBtn = document.getElementById("regionBackBtn");
+  const title = document.getElementById("headerTitle");
+  const searchBtn = document.getElementById("regionSearchBtn");
+  const search = document.getElementById("headerSearch");
+  const darkBtn = document.querySelector(".dark-mode-btn");
+  const input = document.getElementById("searchInput");
+
+  if (backBtn) backBtn.style.display = "none";
+  if (title) title.style.display = "none";
+  if (searchBtn) searchBtn.style.display = "none";
+  if (search) search.classList.remove("active");
+  if (darkBtn) darkBtn.style.display = "flex";
+  if (input) input.value = "";
+  currentCountry = null;
+  updateSearchIcon();
+
   while (musicList.firstChild) musicList.removeChild(musicList.firstChild);
 
-  const worldMsg = document.createElement("div");
-  worldMsg.style.cssText =
-    "padding: 60px 20px; text-align: center; color: var(--grey);";
-  worldMsg.innerHTML = `
-    <i class="material-icons" style="font-size: 80px; opacity: 0.3; color: var(--primary);">language</i>
-    <h2 style="margin-top: 20px; font-size: 1.5rem; color: var(--grey);">World Radio</h2>
-    <p style="margin-top: 10px; font-size: 1rem; opacity: 0.7;">Sección de emisoras internacionales</p>
-    <p style="margin-top: 5px; font-size: 0.9rem; opacity: 0.6;">Próximamente disponible</p>
+  // Filtrar solo emisoras internacionales (no peruanas)
+  const worldStations = musicData.filter(station => station.pais !== "PE");
+
+  // Si no hay emisoras internacionales, mostrar mensaje
+  if (worldStations.length === 0) {
+    const emptyMsg = document.createElement("div");
+    emptyMsg.style.cssText = "padding: 60px 20px; text-align: center; color: var(--grey);";
+    emptyMsg.innerHTML = `
+      <i class="material-icons" style="font-size: 80px; opacity: 0.3; color: var(--primary);">language</i>
+      <h2 style="margin-top: 20px; font-size: 1.5rem; color: var(--grey);">World Radio</h2>
+      <p style="margin-top: 10px; font-size: 1rem; opacity: 0.7;">Aún no hay emisoras internacionales</p>
+      <p style="margin-top: 5px; font-size: 0.9rem; opacity: 0.6;">Agrega emisoras con código de país diferente a PE</p>
+    `;
+    musicList.appendChild(emptyMsg);
+    return;
+  }
+
+  // Contenedor para las tarjetas de países
+  const containerDiv = document.createElement("div");
+  containerDiv.className = "regions-container";
+  musicList.appendChild(containerDiv);
+
+  // Agrupar por país
+  const countryGroups = {};
+  worldStations.forEach((station) => {
+    const countryCode = station.pais || "XX";
+    const countryName = countryNames[countryCode] || countryCode;
+    if (!countryGroups[countryName]) {
+      countryGroups[countryName] = [];
+    }
+    countryGroups[countryName].push(station);
+  });
+
+  // Agregar "Todas" al inicio
+  const todosCard = document.createElement("div");
+  todosCard.className = "region-card";
+  todosCard.innerHTML = `
+    <div class="region-card-header">
+      <h3>🌍 Todas</h3>
+      <span class="region-card-count">${worldStations.length} emisoras</span>
+    </div>
+    <button class="region-card-btn" onclick="showAllWorldStations()">
+      <i class="material-icons">chevron_right</i>
+    </button>
   `;
-  musicList.appendChild(worldMsg);
+  containerDiv.appendChild(todosCard);
+
+  // Agregar tarjetas por país
+  Object.keys(countryGroups)
+    .sort()
+    .forEach((countryName) => {
+      const card = document.createElement("div");
+      card.className = "region-card";
+      card.innerHTML = `
+      <div class="region-card-header">
+        <h3>${countryName}</h3>
+        <span class="region-card-count">${countryGroups[countryName].length} emisoras</span>
+      </div>
+      <button class="region-card-btn" onclick="showCountryStations('${countryName}')">
+        <i class="material-icons">chevron_right</i>
+      </button>
+    `;
+      containerDiv.appendChild(card);
+    });
+
+  musicList.scrollTop = 0;
+}
+
+// Mostrar todas las emisoras internacionales
+function showAllWorldStations() {
+  currentCountry = "__all__";
+
+  // Configurar header
+  document.getElementById("mainHeader")?.classList.add("region-view");
+  const backBtn = document.getElementById("regionBackBtn");
+  const title = document.getElementById("headerTitle");
+  const searchBtn = document.getElementById("regionSearchBtn");
+  const darkBtn = document.querySelector(".dark-mode-btn");
+
+  if (backBtn) backBtn.style.display = "inline-flex";
+  if (title) {
+    title.textContent = "Todas las internacionales";
+    title.style.display = "block";
+  }
+  if (searchBtn) searchBtn.style.display = "inline-flex";
+  if (darkBtn) darkBtn.style.display = "none";
+
+  while (musicList.firstChild) musicList.removeChild(musicList.firstChild);
+
+  const worldStations = musicData.filter(station => station.pais !== "PE");
+  worldStations.forEach((station) => {
+    const stationDiv = createStationCard(station);
+    musicList.appendChild(stationDiv);
+  });
+
+  musicList.scrollTop = 0;
+}
+
+// Mostrar emisoras de un país específico
+function showCountryStations(countryName) {
+  currentCountry = countryName;
+
+  // Configurar header
+  document.getElementById("mainHeader")?.classList.add("region-view");
+  const backBtn = document.getElementById("regionBackBtn");
+  const title = document.getElementById("headerTitle");
+  const searchBtn = document.getElementById("regionSearchBtn");
+  const darkBtn = document.querySelector(".dark-mode-btn");
+
+  if (backBtn) backBtn.style.display = "inline-flex";
+  if (title) {
+    title.textContent = countryName;
+    title.style.display = "block";
+  }
+  if (searchBtn) searchBtn.style.display = "inline-flex";
+  if (darkBtn) darkBtn.style.display = "none";
+
+  while (musicList.firstChild) musicList.removeChild(musicList.firstChild);
+
+  const countryStations = musicData.filter(station => {
+    const stationCountryName = countryNames[station.pais] || station.pais;
+    return stationCountryName === countryName;
+  });
+
+  countryStations.forEach((station) => {
+    const stationDiv = createStationCard(station);
+    musicList.appendChild(stationDiv);
+  });
+
   musicList.scrollTop = 0;
 }
 
@@ -854,7 +1152,9 @@ function toggleRegion(region) {
 function showAllStations() {
   while (musicList.firstChild) musicList.removeChild(musicList.firstChild);
 
-  musicData.forEach((station) => {
+  // Filtrar solo emisoras peruanas para Locales
+  const localStations = musicData.filter(station => station.pais === "PE");
+  localStations.forEach((station) => {
     const stationDiv = createStationCard(station);
     musicList.appendChild(stationDiv);
   });
@@ -880,8 +1180,10 @@ function showAllStations() {
 }
 
 function showRegionStations(region) {
+  // Filtrar solo emisoras peruanas para Locales
+  const localStations = musicData.filter(station => station.pais === "PE");
   const regionGroups = {};
-  musicData.forEach((station) => {
+  localStations.forEach((station) => {
     const stationRegion = station.region || "Sin región";
     if (!regionGroups[stationRegion]) {
       regionGroups[stationRegion] = [];
@@ -948,8 +1250,10 @@ function displayRegionGroups() {
   containerDiv.className = "regions-container";
   musicList.appendChild(containerDiv);
 
+  // Filtrar solo emisoras peruanas para Locales
+  const localStations = musicData.filter(station => station.pais === "PE");
   const regionGroups = {};
-  musicData.forEach((station) => {
+  localStations.forEach((station) => {
     const region = station.region || "Sin región";
     if (!regionGroups[region]) {
       regionGroups[region] = [];
@@ -963,7 +1267,7 @@ function displayRegionGroups() {
   todosCard.innerHTML = `
     <div class="region-card-header">
       <h3>Todas</h3>
-      <span class="region-card-count">${musicData.length} emisoras</span>
+      <span class="region-card-count">${localStations.length} emisoras</span>
     </div>
     <button class="region-card-btn" onclick="showAllStations()">
       <i class="material-icons">chevron_right</i>
@@ -990,10 +1294,12 @@ function displayRegionGroups() {
     });
 }
 
-// Función para volver a la lista de regiones o géneros según la vista actual
+// Función para volver a la lista de regiones, géneros o países según la vista actual
 function goBackToList() {
   if (currentView === "genres") {
     displayGenreGroups();
+  } else if (currentView === "world") {
+    displayCountryGroups();
   } else {
     displayRegionGroups();
   }
@@ -1093,6 +1399,9 @@ function darkMood() {
   try {
     localStorage.setItem("theme", themes[currentThemeIndex]);
   } catch (e) {}
+  
+  // Actualizar colores del botón de limpiar búsqueda al cambiar tema
+  updateSearchIcon();
 }
 
 // ========================================
@@ -1139,6 +1448,7 @@ async function playMusic(id) {
   setActive(currentId);
   setData(data);
   syncPlayButtons(true);
+  updateMiniFavoriteButton();
 
   try {
     localStorage.setItem(
@@ -1694,6 +2004,7 @@ function FirstSetUp() {
     audio.src = stationToLoad.src || "";
     setData(stationToLoad);
     setActive(currentId);
+    updateMiniFavoriteButton();
   }
 
   try {
@@ -1719,6 +2030,8 @@ function setEqualizer(action = false) {
     `.music[data-id="${currentId}"] .equalize`
   );
   const thumb = document.querySelector(".thumbnail");
+  const miniEqualizer = document.getElementById("miniPlayerEqualizer");
+  
   if (elc) {
     if (action) elc.classList.add("pause");
     else elc.classList.remove("pause");
@@ -1726,6 +2039,81 @@ function setEqualizer(action = false) {
   if (thumb && thumb.classList.contains("spin")) {
     if (audio.paused) thumb.classList.add("pause");
     else thumb.classList.remove("pause");
+  }
+  
+  // Controlar animación del reproductor minimizado
+  if (miniEqualizer) {
+    if (action) {
+      miniEqualizer.classList.remove("playing");
+      miniEqualizer.classList.add("paused");
+    } else {
+      miniEqualizer.classList.add("playing");
+      miniEqualizer.classList.remove("paused");
+    }
+  }
+}
+
+// ========================================
+// BOTÓN DE FAVORITOS EN REPRODUCTOR EXPANDIDO
+// ========================================
+function toggleCurrentFavorite(event) {
+  if (event) {
+    event.stopPropagation();
+  }
+  
+  if (!currentId) return;
+  
+  toggleFavorite(currentId, event);
+  updateFavoriteExpandedButton();
+  
+  // Animación de pulso
+  const favBtn = document.getElementById("favoriteExpandedBtn");
+  if (favBtn) {
+    favBtn.classList.add("pulse");
+    setTimeout(() => favBtn.classList.remove("pulse"), 400);
+  }
+}
+
+function updateFavoriteExpandedButton() {
+  const favBtn = document.getElementById("favoriteExpandedBtn");
+  if (!favBtn) return;
+  
+  const icon = favBtn.querySelector(".material-icons");
+  if (currentId && isFavorite(currentId)) {
+    icon.textContent = "favorite";
+    favBtn.classList.add("active");
+  } else {
+    icon.textContent = "favorite_border";
+    favBtn.classList.remove("active");
+  }
+}
+
+// Alias para compatibilidad
+function updateMiniFavoriteButton() {
+  updateFavoriteExpandedButton();
+}
+
+// ========================================
+// FUNCIÓN DE COMPARTIR LA APLICACIÓN
+// ========================================
+async function shareApp() {
+  const shareData = {
+    title: 'Radios del Perú',
+    text: '¡Escucha las mejores emisoras de radio del Perú en vivo! 📻🇵🇪',
+    url: window.location.origin
+  };
+
+  try {
+    if (navigator.share) {
+      await navigator.share(shareData);
+      console.log('Contenido compartido exitosamente');
+    } else {
+      // Fallback: copiar al portapapeles
+      await navigator.clipboard.writeText(shareData.url);
+      showErrorMessage('¡Enlace copiado!');
+    }
+  } catch (err) {
+    console.log('Error al compartir:', err);
   }
 }
 
